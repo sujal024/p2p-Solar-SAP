@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mvc:View
+    controllerName="solar.epc.projectmanagement.login.LoginPage"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+
+    <Shell id="loginShell" appWidthLimited="false" class="lp-shell">
+        <app>
+            <App id="loginApp" backgroundColor="transparent">
+                <pages>
+                    <Page id="loginPage" showHeader="false"
+                          backgroundDesign="Transparent" class="lp-page">
+                        <content>
+
+                            <!-- ═══ TWO-COLUMN ROOT ═══════════════════════════ -->
+                            <HBox id="lpRoot" class="lp-root" renderType="Bare"
+                                  alignItems="Stretch">
+
+                                <!-- ══════════════════════════════════════════════
+                                     LEFT PANEL  —  branding + feature overview
+                                     ══════════════════════════════════════════════ -->
+                                <VBox id="lpLeft" class="lp-left">
+
+                                    <!-- ── Logo + app name ───────────────────── -->
+                                    <HBox id="lpBrandRow" class="lp-brand-row"
+                                          alignItems="Center">
+                                        <HBox class="lp-brand-icon-wrap"
+                                              alignItems="Center" justifyContent="Center">
+                                            <core:Icon src="sap-icon://energy-savings-item" />
+                                        </HBox>
+                                        <VBox class="sapUiTinyMarginBegin">
+                                            <HBox alignItems="Center">
+                                                <Text text="SolarSage EPC"
+                                                      class="lp-brand-name" />
+                                                <Text text="v1.0"
+                                                      class="lp-brand-version" />
+                                            </HBox>
+                                            <HBox class="lp-beta-row" alignItems="Center">
+                                                <HBox class="lp-beta-dot" alignItems="Center">
+                                                    <core:Icon src="sap-icon://status-positive" />
+                                                </HBox>
+                                                <Text text="Now in BETA"
+                                                      class="lp-beta-label" />
+                                            </HBox>
+                                        </VBox>
+                                    </HBox>
+
+                                    <!-- ── Hero text + features ──────────────── -->
+                                    <VBox id="lpHero" class="lp-hero">
+                                        <Title id="lpHeroL1"
+                                               text="Solar EPC"
+                                               level="H1"
+                                               class="lp-hero-line1" />
+                                        <Title id="lpHeroL2"
+                                               text="Command Center"
+                                               level="H1"
+                                               class="lp-hero-line2" />
+                                        <Text id="lpHeroSub"
+                                              text="Powering Tomorrow's Projects, Today"
+                                              class="lp-hero-sub" />
+
+                                        <!-- Feature cards -->
+                                        <VBox class="lp-features">
+
+                                            <HBox class="lp-feat-item" alignItems="Center">
+                                                <HBox class="lp-feat-icon lp-feat-icon-a"
+                                                      alignItems="Center"
+                                                      justifyContent="Center">
+                                                    <core:Icon src="sap-icon://project-definition-triangle" />
+                                                </HBox>
+                                                <VBox class="sapUiSmallMarginBegin">
+                                                    <Text text="End-to-End Project Management"
+                                                          class="lp-feat-title" />
+                                                    <Text text="BOQ, material requests and approvals in one flow"
+                                                          class="lp-feat-desc" />
+                                                </VBox>
+                                            </HBox>
+
+                                            <HBox class="lp-feat-item" alignItems="Center">
+                                                <HBox class="lp-feat-icon lp-feat-icon-b"
+                                                      alignItems="Center"
+                                                      justifyContent="Center">
+                                                    <core:Icon src="sap-icon://bar-chart" />
+                                                </HBox>
+                                                <VBox class="sapUiSmallMarginBegin">
+                                                    <Text text="Procurement Intelligence"
+                                                          class="lp-feat-title" />
+                                                    <Text text="Vendor evaluation, PO tracking and 3-way match"
+                                                          class="lp-feat-desc" />
+                                                </VBox>
+                                            </HBox>
+
+                                            <HBox class="lp-feat-item" alignItems="Center">
+                                                <HBox class="lp-feat-icon lp-feat-icon-c"
+                                                      alignItems="Center"
+                                                      justifyContent="Center">
+                                                    <core:Icon src="sap-icon://shield" />
+                                                </HBox>
+                                                <VBox class="sapUiSmallMarginBegin">
+                                                    <Text text="Role-Based Access Control"
+                                                          class="lp-feat-title" />
+                                                    <Text text="Seven roles with enterprise-grade permission gates"
+                                                          class="lp-feat-desc" />
+                                                </VBox>
+                                            </HBox>
+
+                                        </VBox>
+                                    </VBox>
+
+                                    <!-- ── Footer ────────────────────────────── -->
+                                    <Text text="© 2026 SolarSage EPC. All rights reserved."
+                                          class="lp-left-footer" />
+
+                                </VBox>
+                                <!-- end left panel -->
+
+
+                                <!-- ══════════════════════════════════════════════
+                                     RIGHT PANEL  —  login form
+                                     ══════════════════════════════════════════════ -->
+                                <VBox id="lpRight" class="lp-right"
+                                      justifyContent="Center">
+
+                                    <VBox class="lp-form-wrap">
+
+                                        <!-- Heading -->
+                                        <Title id="lpFormTitle"
+                                               text="Welcome back"
+                                               level="H2"
+                                               class="lp-form-heading" />
+                                        <Text id="lpFormSub"
+                                              text="Sign in to access your EPC platform"
+                                              class="lp-form-sub-text" />
+
+                                        <!-- Username -->
+                                        <Label text="Username" class="lp-label" />
+                                        <Input
+                                            id="inputUsername"
+                                            placeholder="engineer1 · mgmt1 · proc1 · site1"
+                                            value="{login>/username}"
+                                            class="lp-input"
+                                            submit="onLoginPress" />
+
+                                        <!-- Password -->
+                                        <Label text="Password"
+                                               class="lp-label lp-label-gap" />
+                                        <Input
+                                            id="inputPassword"
+                                            type="Password"
+                                            placeholder="Enter your password"
+                                            value="{login>/password}"
+                                            submit="onLoginPress"
+                                            class="lp-input" />
+
+                                        <!-- Sign In -->
+                                        <Button
+                                            id="btnLogin"
+                                            text="Sign In"
+                                            type="Emphasized"
+                                            press="onLoginPress"
+                                            class="lp-btn-signin"
+                                            width="100%" />
+
+                                    </VBox>
+                                    <!-- end lp-form-wrap -->
+
+                                </VBox>
+                                <!-- end right panel -->
+
+                            </HBox>
+                            <!-- end lp-root -->
+
+                        </content>
+                    </Page>
+                </pages>
+            </App>
+        </app>
+    </Shell>
+
+</mvc:View>

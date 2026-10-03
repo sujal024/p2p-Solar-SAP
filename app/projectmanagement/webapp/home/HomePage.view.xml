@@ -1,0 +1,990 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mvc:View
+    controllerName="solar.epc.projectmanagement.home.HomePage"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:cssgrid="sap.ui.layout.cssgrid"
+    xmlns:card="sap.f.cards"
+    xmlns:core="sap.ui.core"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:dnd="sap.ui.core.dnd"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    displayBlock="true">
+
+    <html:style>
+        :root {
+        --primary-dark: #0d1f35;
+        --primary-green: #27c88a;
+        --primary-green-deep: #1a5c4e;
+        --page-bg: #eef3f8;
+        --surface: #ffffff;
+        --surface-strong: #f8fbfd;
+        --text-main: #12243a;
+        --text-soft: #5d6b7b;
+        --text-muted: rgba(255, 255, 255, 0.4);
+        --border-subtle: rgba(255, 255, 255, 0.08);
+        --border-light: rgba(18, 36, 58, 0.08);
+        --shadow-soft: 0 20px 40px rgba(13, 31, 53, 0.08);
+        --shadow-card: 0 10px 24px rgba(18, 36, 58, 0.08);
+        }
+
+        .sapMTitle, .sapMText, .sapMLabel, .sapMBtn, .sapMObjStatus, .sapMObjectAttributeText,
+        .sapMObjectNumberText {
+        font-family: "72", "Helvetica Neue", Arial, sans-serif !important;
+        }
+
+        .customPageBackground {
+        background:
+        radial-gradient(circle at top right, rgba(39, 200, 138, 0.08), transparent 22%),
+        linear-gradient(180deg, #f6f9fc 0%, var(--page-bg) 35%, #ecf1f7 100%) !important;
+        }
+
+        .pageContent {
+        gap: 0.55rem;
+        }
+
+        .heroShell {
+        background: var(--primary-dark);
+        border-radius: 1.5rem;
+        padding: 0.95rem 1.1rem;
+        box-shadow: var(--shadow-soft);
+        position: relative;
+        overflow: hidden;
+        }
+
+        .heroShell::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+        radial-gradient(circle at 18% 22%, rgba(39, 200, 138, 0.22), transparent 26%),
+        radial-gradient(circle at 82% 18%, rgba(242, 133, 22, 0.18), transparent 24%),
+        radial-gradient(circle at 72% 78%, rgba(15, 139, 141, 0.16), transparent 22%),
+        linear-gradient(120deg, rgba(125, 58, 237, 0.14), transparent 32%);
+        pointer-events: none;
+        }
+
+        .heroShell::after {
+        content: "";
+        position: absolute;
+        top: -30%;
+        right: -6rem;
+        width: 18rem;
+        height: 18rem;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent 62%);
+        pointer-events: none;
+        }
+
+        .heroShell > * {
+        position: relative;
+        z-index: 1;
+        }
+
+        .heroMeta {
+        align-items: flex-start;
+        }
+
+        .heroAvatar {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .heroKicker {
+        color: var(--primary-green) !important;
+        font-size: 0.75rem !important;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        }
+
+        .heroTitle {
+        color: #ffffff !important;
+        font-size: 1.9rem !important;
+        }
+
+        .heroSubtitle {
+        color: var(--text-muted) !important;
+        font-size: 0.98rem !important;
+        max-width: 36rem;
+        }
+
+        .heroPill {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+        border: 1px solid var(--border-subtle);
+        border-radius: 999px;
+        padding: 0.45rem 0.8rem;
+        }
+
+        .heroPillAccentBlue {
+        background: linear-gradient(180deg, rgba(15, 105, 216, 0.26), rgba(15, 105, 216, 0.08));
+        }
+
+        .heroPillAccentTeal {
+        background: linear-gradient(180deg, rgba(15, 139, 141, 0.28), rgba(15, 139, 141, 0.08));
+        }
+
+        .heroPill .sapMText,
+        .heroPill .sapUiIcon {
+        color: #ffffff !important;
+        }
+
+        .liveBadge {
+        background: rgba(39, 200, 138, 0.14);
+        border: 1px solid rgba(39, 200, 138, 0.35);
+        border-radius: 999px;
+        padding: 0.35rem 0.7rem;
+        }
+
+        .liveBadge .sapMText,
+        .liveBadge .sapUiIcon {
+        color: var(--primary-green) !important;
+        font-weight: 700;
+        }
+
+        .heroToolbar {
+        border-left: 1px solid var(--border-subtle);
+        padding-left: 1rem;
+        }
+
+        .heroToolbar .sapMBtnTransparent .sapMBtnIcon,
+        .heroToolbar .sapMBtnTransparent .sapMBtnContent,
+        .heroToolbar .sapUiIcon,
+        .heroToolbar .sapMText,
+        .heroToolbar .sapMObjStatusText {
+        color: #ffffff !important;
+        }
+
+        .heroToolbar .sapMTB {
+        background: transparent !important;
+        border: 0 !important;
+        }
+
+        .heroToolbar .sapMTBSeparator {
+        background: var(--border-subtle) !important;
+        }
+
+        .sectionBand {
+        background: rgba(255, 255, 255, 0.42);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 1.25rem;
+        padding: 0.65rem 0.75rem;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+        }
+
+        .sectionHeading {
+        color: var(--text-main) !important;
+        }
+
+        .sectionCaption {
+        color: var(--text-soft) !important;
+        }
+
+        .homeSplitter {
+        background: transparent !important;
+        min-height: 0 !important;
+        height: auto !important;
+        }
+
+        .homeSplitter > .sapUiLoSplitterBar {
+        background: rgba(18, 36, 58, 0.08) !important;
+        border-radius: 999px;
+        width: 0.45rem !important;
+        margin: 0 0.25rem;
+        align-self: flex-start;
+        }
+
+        .homeSplitter > .sapUiLoSplitterBar:hover,
+        .homeSplitter > .sapUiLoSplitterBar:focus,
+        .homeSplitter > .sapUiLoSplitterBar.sapUiLoSplitterBarActive {
+        background: rgba(10, 110, 209, 0.28) !important;
+        }
+
+        .todoPane,
+        .tilesPane {
+        height: auto;
+        }
+
+        .todoPane {
+        overflow: auto;
+        min-height: 5rem;
+        max-height: 55vh;
+        resize: vertical;
+        }
+
+        .sapFCard {
+        border-radius: 1.25rem !important;
+        border: 1px solid var(--border-light) !important;
+        background: var(--surface) !important;
+        box-shadow: var(--shadow-card) !important;
+        height: 100% !important;
+        transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease !important;
+        }
+
+        .sapFCard:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 18px 30px rgba(18, 36, 58, 0.12) !important;
+        border-color: rgba(18, 36, 58, 0.14) !important;
+        }
+
+        .scrollableCard .sapFCardContent {
+        overflow-y: auto !important;
+        }
+
+        .actionCenterCard .sapFCardHeader {
+        background: linear-gradient(180deg, #ffffff 0%, #f7fbfd 100%) !important;
+        border-bottom: 1px solid rgba(18, 36, 58, 0.06);
+        border-radius: 1.25rem 1.25rem 0 0;
+        padding: 0.55rem 0.8rem !important;
+        }
+
+        .actionCenterCard .sapFCardHeader .sapMTitle {
+        color: var(--text-main) !important;
+        }
+
+        .actionCenterCard .sapFCardHeader .sapMText,
+        .actionCenterCard .sapFCardHeader .sapFCardStatus {
+        color: var(--text-soft) !important;
+        }
+
+        .actionCenterCard .sapMList {
+        background: transparent !important;
+        }
+
+        .actionCenterCard .sapMLIB {
+        margin: 0.25rem 0.55rem;
+        border-radius: 1rem;
+        border: 1px solid rgba(18, 36, 58, 0.08);
+        background: var(--surface-strong) !important;
+        box-shadow: 0 8px 20px rgba(18, 36, 58, 0.04);
+        }
+
+        .actionCenterCard .sapMLIB:first-child {
+        margin-top: 0.4rem;
+        }
+
+        .actionCenterCard .sapMLIB:last-child {
+        margin-bottom: 0.4rem;
+        }
+
+        .actionCenterCard .sapMLIBContent {
+        padding-top: 0.15rem !important;
+        padding-bottom: 0.15rem !important;
+        }
+
+        .actionCenterCard .sapFCardContent {
+        padding-bottom: 0.35rem !important;
+        }
+
+        .gradientBlue { background: linear-gradient(135deg, #0f69d8, #0a4ea7) !important; border:
+        none !important; }
+        .gradientOrange { background: linear-gradient(135deg, #f28516, #d86808) !important; border:
+        none !important; }
+        .gradientPurple { background: linear-gradient(135deg, #7d3aed, #5b21b6) !important; border:
+        none !important; }
+        .gradientTeal { background: linear-gradient(135deg, #0f8b8d, #0a6c6e) !important; border:
+        none !important; }
+        .gradientMagenta { background: linear-gradient(135deg, #c026d3, #9d174d) !important; border:
+        none !important; }
+        .gradientGreen { background: linear-gradient(135deg, #1f9d6a, #166b48) !important; border:
+        none !important; }
+
+        .gradientBlue .sapFCardHeader, .gradientOrange .sapFCardHeader,
+        .gradientPurple .sapFCardHeader, .gradientTeal .sapFCardHeader,
+        .gradientMagenta .sapFCardHeader, .gradientGreen .sapFCardHeader,
+        .gradientBlue .sapFCardHeader:hover, .gradientOrange .sapFCardHeader:hover,
+        .gradientPurple .sapFCardHeader:hover, .gradientTeal .sapFCardHeader:hover,
+        .gradientMagenta .sapFCardHeader:hover, .gradientGreen .sapFCardHeader:hover,
+        .gradientBlue .sapFCardHeader:active, .gradientOrange .sapFCardHeader:active,
+        .gradientPurple .sapFCardHeader:active, .gradientTeal .sapFCardHeader:active,
+        .gradientMagenta .sapFCardHeader:active, .gradientGreen .sapFCardHeader:active,
+        .gradientBlue .sapMNC, .gradientOrange .sapMNC,
+        .gradientPurple .sapMNC, .gradientTeal .sapMNC,
+        .gradientMagenta .sapMNC, .gradientGreen .sapMNC {
+        background: transparent !important;
+        background-color: transparent !important;
+        }
+
+        .gradientBlue .sapFCardHeader,
+        .gradientOrange .sapFCardHeader,
+        .gradientPurple .sapFCardHeader,
+        .gradientTeal .sapFCardHeader,
+        .gradientMagenta .sapFCardHeader,
+        .gradientGreen .sapFCardHeader {
+        height: 100% !important;
+        box-sizing: border-box;
+        padding: 1rem 1.1rem !important;
+        }
+
+        .gradientBlue .sapMText, .gradientBlue .sapMTitle, .gradientBlue .sapUiIcon, .gradientBlue
+        .sapMNCValue, .gradientBlue .sapMNCScale, .gradientBlue .sapMObjectNumberText, .gradientBlue
+        .sapMObjectNumberUnit,
+        .gradientOrange .sapMText, .gradientOrange .sapMTitle, .gradientOrange .sapUiIcon,
+        .gradientOrange .sapMNCValue, .gradientOrange .sapMNCScale, .gradientOrange
+        .sapMObjectNumberText, .gradientOrange .sapMObjectNumberUnit,
+        .gradientPurple .sapMText, .gradientPurple .sapMTitle, .gradientPurple .sapUiIcon,
+        .gradientPurple .sapMNCValue, .gradientPurple .sapMNCScale, .gradientPurple
+        .sapMObjectNumberText, .gradientPurple .sapMObjectNumberUnit,
+        .gradientTeal .sapMText, .gradientTeal .sapMTitle, .gradientTeal .sapUiIcon, .gradientTeal
+        .sapMNCValue, .gradientTeal .sapMNCScale, .gradientTeal .sapMObjectNumberText, .gradientTeal
+        .sapMObjectNumberUnit,
+        .gradientMagenta .sapMText, .gradientMagenta .sapMTitle, .gradientMagenta .sapUiIcon,
+        .gradientMagenta .sapMNCValue, .gradientMagenta .sapMNCScale, .gradientMagenta
+        .sapMObjectNumberText, .gradientMagenta .sapMObjectNumberUnit,
+        .gradientGreen .sapMText, .gradientGreen .sapMTitle, .gradientGreen .sapUiIcon,
+        .gradientGreen .sapMNCValue, .gradientGreen .sapMNCScale, .gradientGreen
+        .sapMObjectNumberText, .gradientGreen .sapMObjectNumberUnit {
+        color: #ffffff !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+        }
+
+        .gradientBlue .sapMValueColorCritical, .gradientOrange .sapMValueColorCritical,
+        .gradientPurple .sapMValueColorCritical, .gradientTeal .sapMValueColorCritical,
+        .gradientMagenta .sapMValueColorCritical, .gradientGreen .sapMValueColorCritical,
+        .gradientBlue .sapMValueColorError, .gradientOrange .sapMValueColorError, .gradientPurple
+        .sapMValueColorError, .gradientTeal .sapMValueColorError, .gradientMagenta
+        .sapMValueColorError, .gradientGreen .sapMValueColorError,
+        .gradientBlue .sapMValueColorGood, .gradientOrange .sapMValueColorGood, .gradientPurple
+        .sapMValueColorGood, .gradientTeal .sapMValueColorGood, .gradientMagenta
+        .sapMValueColorGood, .gradientGreen .sapMValueColorGood {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        }
+
+        .appLauncherShell {
+        background: rgba(255, 255, 255, 0.84);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        border-radius: 1.5rem;
+        padding: 0.65rem 0.7rem 0.3rem;
+        box-shadow: var(--shadow-card);
+        }
+
+        .appCardItem {
+        background:
+        linear-gradient(180deg, #ffffff 0%, #f7fbfd 100%);
+        border-radius: 1rem;
+        border: 1px solid rgba(18, 36, 58, 0.08);
+        box-shadow: 0 8px 24px rgba(18, 36, 58, 0.05);
+        height: 5rem;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        }
+
+        .appCardItem:hover {
+        box-shadow: 0 14px 28px rgba(13, 31, 53, 0.1);
+        border-color: rgba(39, 200, 138, 0.3);
+        transform: translateY(-3px);
+        }
+
+        .sapFGridListItem .sapMLIBContent {
+        padding: 0 !important;
+        }
+
+        .appsTabBar .sapMITBHead {
+        border-bottom: 1px solid rgba(18, 36, 58, 0.08);
+        }
+
+        .appsTabBar .sapMITBFilterDefault {
+        color: var(--text-soft) !important;
+        }
+
+        .appsTabBar .sapMITBSelected .sapMITBText {
+        color: var(--primary-dark) !important;
+        font-weight: 700;
+        }
+
+        .appsTabBar .sapMITBSelected .sapMITBContentArrow::after {
+        background: var(--primary-green) !important;
+        }
+
+        .subtleEmptyText {
+        color: var(--text-soft) !important;
+        }
+
+        .footerShell {
+        background: linear-gradient(180deg, rgba(13, 31, 53, 0.96), rgba(9, 21, 36, 1));
+        border-radius: 1.4rem;
+        padding: 0.9rem 1.1rem;
+        box-shadow: var(--shadow-card);
+        }
+
+        .footerBrand {
+        color: #ffffff !important;
+        }
+
+        .footerCopy,
+        .footerMeta {
+        color: var(--text-muted) !important;
+        }
+
+        .footerTag {
+        background: rgba(39, 200, 138, 0.12);
+        border: 1px solid rgba(39, 200, 138, 0.28);
+        border-radius: 999px;
+        padding: 0.35rem 0.75rem;
+        }
+
+        .footerTag .sapMText,
+        .footerTag .sapUiIcon {
+        color: var(--primary-green) !important;
+        }
+    </html:style>
+
+    <Page id="page" showHeader="false" class="customPageBackground">
+        <content>
+            <VBox id="pageContent"
+                class="pageContent sapUiMediumMarginBeginEnd sapUiSmallMarginTop sapUiSmallMarginBottom">
+
+                <HBox justifyContent="SpaceBetween" alignItems="Center" wrap="Wrap"
+                    class="heroShell">
+                    <HBox alignItems="Center" wrap="Wrap" class="heroMeta">
+                        <f:Avatar id="userAvatar" src="sap-icon://customer" displaySize="L"
+                            class="heroAvatar sapUiMediumMarginEnd sapUiSmallMarginBottom" />
+                        <VBox class="sapUiTinyMarginBottom">
+                            <Text text="SolarSage EPC" class="heroKicker sapUiTinyMarginBottom" />
+                            <Title text="{view>/greeting}, {view>/userName}" level="H1"
+                                class="heroTitle sapUiTinyMarginBottom" />
+                            <Text text="{view>/systemName} | {view>/role}"
+                                class="heroSubtitle sapUiTinyMarginBottom" />
+                            <HBox wrap="Wrap" class="sapUiTinyMarginTop">
+                                <HBox alignItems="Center"
+                                    class="heroPill heroPillAccentBlue sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                                    <core:Icon src="sap-icon://pulse" size="0.75rem"
+                                        class="sapUiTinyMarginEnd" />
+                                    <Text text="{view>/todosCount} actions pending" />
+                                </HBox>
+                                <HBox alignItems="Center"
+                                    class="heroPill heroPillAccentTeal sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                                    <core:Icon src="sap-icon://person-placeholder" size="0.75rem"
+                                        class="sapUiTinyMarginEnd" />
+                                    <Text text="{view>/role}" />
+                                </HBox>
+                                <HBox alignItems="Center" class="liveBadge sapUiTinyMarginBottom">
+                                    <core:Icon src="sap-icon://circle-task-2" size="0.6rem"
+                                        class="sapUiTinyMarginEnd" />
+                                    <Text text="LIVE" />
+                                </HBox>
+                            </HBox>
+                        </VBox>
+                    </HBox>
+
+                    <HBox alignItems="Center" wrap="Wrap" class="heroToolbar sapUiTinyMarginTop">
+                        <Toolbar id="devToolbar" visible="{session>/isLocalSimulation}"
+                            style="Clear" class="sapUiTinyMarginBottom">
+
+                            <Text text="User: {session>/userId}" />
+
+                            <ToolbarSeparator />
+                            <Button text="Switch User" icon="sap-icon://group" press=".onSwitchUser"
+                                type="Transparent" />
+                            <ToolbarSeparator />
+                            <Button id="btnLogout" text="Logout" icon="sap-icon://log"
+                                tooltip="Logout" type="Transparent" press=".onLogout"
+                                class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+                        </Toolbar>
+                    </HBox>
+                </HBox>
+
+                <VBox class="sectionBand">
+                    <HBox justifyContent="SpaceBetween" alignItems="Center" wrap="Wrap"
+                        class="sapUiSmallMarginBottom">
+                        <VBox>
+                            <Title text="Action Center" level="H3"
+                                class="sectionHeading sapUiTinyMarginBottom" />
+                            <Text
+                                text="Priority tasks and role-based work that needs your attention now."
+                                class="sectionCaption" />
+                        </VBox>
+                        <ObjectStatus text="{view>/todosCount} Pending" state="Warning"
+                            inverted="true" class="sapUiTinyMarginTop" />
+                    </HBox>
+
+                    <l:Splitter id="homeMainSplitter" orientation="Horizontal" height="auto"
+                        class="homeSplitter sapUiSmallMarginBottom">
+                        <l:contentAreas>
+                            <VBox class="todoPane">
+                                <layoutData>
+                                    <l:SplitterLayoutData size="36%" minSize="280" resizable="true" />
+                                </layoutData>
+                                <f:Card id="todoCard"
+                                    class="sapFCard scrollableCard actionCenterCard"
+                                    height="{= ${view>/todoRows} === 2 ? '1.65rem' : '3.7rem' }">
+                                    <f:header>
+                                        <card:Header
+                                            title="Tasks Requiring Attention"
+                                            subtitle="Focused work queue for your current role"
+                                            statusText="{view>/todosCount} Pending"
+                                            iconSrc="sap-icon://task" />
+                                    </f:header>
+                                    <f:content>
+                                        <List id="todoList" items="{view>/todos}" growing="false"
+                                            noDataText="All caught up. Nothing is pending for your role right now.">
+                                            <items>
+                                                <ObjectListItem
+                                                    title="{view>title}"
+                                                    number="{view>status}"
+                                                    numberState="{view>state}"
+                                                    type="Navigation"
+                                                    press="onTodoPress"
+                                                    icon="{view>icon}">
+                                                    <firstStatus>
+                                                        <ObjectStatus text="{view>project}" />
+                                                    </firstStatus>
+                                                    <attributes>
+                                                        <ObjectAttribute text="{view>role}" />
+                                                    </attributes>
+                                                </ObjectListItem>
+                                            </items>
+                                        </List>
+                                    </f:content>
+                                </f:Card>
+                            </VBox>
+
+                            <VBox class="tilesPane">
+                                <layoutData>
+                                    <l:SplitterLayoutData size="64%" minSize="420" resizable="true" />
+                                </layoutData>
+                                <f:GridContainer
+                                    id="mainGrid"
+                                    containerQuery="true"
+                                    snapToRow="true">
+
+                                    <f:layout>
+                                        <f:GridContainerSettings rowSize="5rem" columnSize="5rem"
+                                            gap="0.75rem" />
+                                    </f:layout>
+
+                                    <f:Card id="tileHome" class="sapFCard gradientBlue">
+                                        <f:layoutData>
+                                            <f:GridContainerItemLayoutData columns="3" rows="2"
+                                                minRows="2" />
+                                        </f:layoutData>
+                                        <f:header>
+                                            <card:NumericHeader
+                                                title="MyHome"
+                                                subtitle="Personal Dashboard"
+                                                number="{view>/kpis/home/value}"
+                                                scale="{view>/kpis/home/scale}"
+                                                trend="{view>/kpis/home/trend}"
+                                                state="{view>/kpis/home/state}"
+                                                details="{view>/kpis/home/details}"
+                                                press="onNavPress" />
+                                        </f:header>
+                                    </f:Card>
+
+                                    <f:Card id="tileEngineering" class="sapFCard gradientOrange"
+                                        visible="{view>/access/tile_engineeringProjects}">
+                                        <f:layoutData>
+                                            <f:GridContainerItemLayoutData columns="3" rows="2"
+                                                minRows="2" />
+                                        </f:layoutData>
+                                        <f:header>
+                                            <card:NumericHeader
+                                                title="Engineering &amp; Projects"
+                                                subtitle="BOQ &amp; Execution"
+                                                number="{view>/kpis/engineering/value}"
+                                                scale="{view>/kpis/engineering/scale}"
+                                                trend="{view>/kpis/engineering/trend}"
+                                                state="{view>/kpis/engineering/state}"
+                                                details="{view>/kpis/engineering/details}"
+                                                press="onNavPress" />
+                                        </f:header>
+                                    </f:Card>
+
+                                    <f:Card id="tileProcurement" class="sapFCard gradientPurple"
+                                        visible="{view>/access/tile_procurement}">
+                                        <f:layoutData>
+                                            <f:GridContainerItemLayoutData columns="3" rows="2"
+                                                minRows="2" />
+                                        </f:layoutData>
+                                        <f:header>
+                                            <card:NumericHeader
+                                                title="Procurement"
+                                                subtitle="Orders &amp; Vendors"
+                                                number="{view>/kpis/procurement/value}"
+                                                scale="{view>/kpis/procurement/scale}"
+                                                trend="{view>/kpis/procurement/trend}"
+                                                state="{view>/kpis/procurement/state}"
+                                                details="{view>/kpis/procurement/details}"
+                                                press="onNavPress" />
+                                        </f:header>
+                                    </f:Card>
+
+                                    <f:Card id="tileSiteOps" class="sapFCard gradientTeal"
+                                        visible="{view>/access/tile_siteOps}">
+                                        <f:layoutData>
+                                            <f:GridContainerItemLayoutData columns="3" rows="2"
+                                                minRows="2" />
+                                        </f:layoutData>
+                                        <f:header>
+                                            <card:NumericHeader
+                                                title="Site Operations"
+                                                subtitle="Deliveries, Receipts &amp; Claims"
+                                                number="{view>/kpis/siteOps/value}"
+                                                scale="{view>/kpis/siteOps/scale}"
+                                                trend="{view>/kpis/siteOps/trend}"
+                                                state="{view>/kpis/siteOps/state}"
+                                                details="{view>/kpis/siteOps/details}"
+                                                press="onNavPress" />
+                                        </f:header>
+                                    </f:Card>
+
+                                    <f:Card id="tileVendorRebates" class="sapFCard gradientMagenta"
+                                        visible="{view>/access/tile_vendorRebates}">
+                                        <f:layoutData>
+                                            <f:GridContainerItemLayoutData columns="3" rows="2"
+                                                minRows="2" />
+                                        </f:layoutData>
+                                        <f:header>
+                                            <card:NumericHeader
+                                                title="Vendor Rebates"
+                                                subtitle="Contract Management"
+                                                number="{view>/kpis/vendorRebates/value}"
+                                                scale="{view>/kpis/vendorRebates/scale}"
+                                                trend="{view>/kpis/vendorRebates/trend}"
+                                                state="{view>/kpis/vendorRebates/state}"
+                                                details="{view>/kpis/vendorRebates/details}"
+                                                press="onNavPress" />
+                                        </f:header>
+                                    </f:Card>
+
+                                    <f:Card id="tileFinance" class="sapFCard gradientGreen"
+                                        visible="{view>/access/tile_finance}">
+                                        <f:layoutData>
+                                            <f:GridContainerItemLayoutData columns="3" rows="2"
+                                                minRows="2" />
+                                        </f:layoutData>
+                                        <f:header>
+                                            <card:NumericHeader
+                                                title="Finance Cockpit"
+                                                subtitle="Invoice Validation"
+                                                number="{view>/kpis/finance/value}"
+                                                scale="{view>/kpis/finance/scale}"
+                                                trend="{view>/kpis/finance/trend}"
+                                                state="{view>/kpis/finance/state}"
+                                                details="{view>/kpis/finance/details}"
+                                                press="onNavPress" />
+                                        </f:header>
+                                    </f:Card>
+                                </f:GridContainer>
+                            </VBox>
+                        </l:contentAreas>
+                    </l:Splitter>
+                </VBox>
+
+                <VBox class="appLauncherShell">
+                    <HBox id="appsHeader" alignItems="Center" justifyContent="SpaceBetween"
+                        wrap="Wrap" class="sapUiSmallMarginBottom">
+                        <VBox>
+                            <Title id="appsTitle" text="App Launcher" level="H3"
+                                class="sectionHeading sapUiTinyMarginBottom" />
+                            <Text
+                                text="Launch operational tools by role, with edit mode for quick workspace arrangement."
+                                class="sectionCaption" />
+                        </VBox>
+                        <Button id="btnEditApps"
+                            icon="{= ${view>/editMode} ? 'sap-icon://accept' : 'sap-icon://edit' }"
+                            type="{= ${view>/editMode} ? 'Emphasized' : 'Transparent' }"
+                            press="onEditPress" tooltip="Edit Apps" class="sapUiTinyMarginTop" />
+                    </HBox>
+
+                    <IconTabBar id="appsTabBar" expandable="false"
+                        class="appsTabBar sapUiNoMarginTop">
+                        <items>
+                            <IconTabFilter id="tabFavorites" text="Favorites" key="fav">
+                                <f:GridList id="appGrid"
+                                    mode="None"
+                                    showNoData="true"
+                                    noDataText="No apps are available for your current role."
+                                    class="sapUiTinyMarginTop">
+                                    <f:dragDropConfig>
+                                        <dnd:DragInfo sourceAggregation="items"
+                                            enabled="{view>/editMode}" />
+                                        <dnd:DropInfo targetAggregation="items"
+                                            dropPosition="Between" drop="onDrop"
+                                            enabled="{view>/editMode}" />
+                                    </f:dragDropConfig>
+                                    <f:customLayout>
+                                        <cssgrid:GridBasicLayout id="appGridLayout"
+                                            gridTemplateColumns="repeat(auto-fill, minmax(18rem, 1fr))"
+                                            gridGap="0.85rem" />
+                                    </f:customLayout>
+
+                                    <f:GridListItem id="appCreateMR" type="Active"
+                                        press="onAppPress" visible="{view>/access/app_createMR}"
+                                        data:appKey="createMR"
+                                        data:appLabel="Create Material Request">
+                                        <HBox id="appCreateMRBox"
+                                            class="appCardItem sapUiSmallPadding"
+                                            alignItems="Center">
+                                            <core:Icon src="sap-icon://create-form" size="1.75rem"
+                                                color="#0f69d8" class="sapUiMediumMarginEnd" />
+                                            <VBox>
+                                                <Title text="Create Material Request" level="H5" />
+                                                <Text text="Raise BOQ requirements"
+                                                    class="sapMAnnotatedText" />
+                                            </VBox>
+                                        </HBox>
+                                    </f:GridListItem>
+
+                                    <f:GridListItem id="appApproveMR" type="Active"
+                                        press="onAppPress" visible="{view>/access/app_approveMR}"
+                                        data:appKey="approveMR"
+                                        data:appLabel="Approve Material Request">
+                                        <HBox id="appApproveMRBox"
+                                            class="appCardItem sapUiSmallPadding"
+                                            alignItems="Center">
+                                            <core:Icon src="sap-icon://approvals" size="1.75rem"
+                                                color="#1f9d6a" class="sapUiMediumMarginEnd" />
+                                            <VBox>
+                                                <Title text="Approve Material Request" level="H5" />
+                                                <Text text="Review and authorise requests"
+                                                    class="sapMAnnotatedText" />
+                                            </VBox>
+                                        </HBox>
+                                    </f:GridListItem>
+
+                                    <f:GridListItem id="appApprovedMRs" type="Active"
+                                        press="onAppPress" visible="{view>/access/app_approvedMRs}"
+                                        data:appKey="approvedMRs"
+                                        data:appLabel="Approved Material Requests">
+                                        <HBox id="appApprovedMRsBox"
+                                            class="appCardItem sapUiSmallPadding"
+                                            alignItems="Center">
+                                            <core:Icon src="sap-icon://approvals" size="1.75rem"
+                                                color="#7d3aed" class="sapUiMediumMarginEnd" />
+                                            <VBox>
+                                                <Title text="Approved Material Requests" level="H5" />
+                                                <Text text="View MRs ready for vendor sourcing"
+                                                    class="sapMAnnotatedText" />
+                                            </VBox>
+                                        </HBox>
+                                    </f:GridListItem>
+
+                                    <f:GridListItem id="appManageVendors" type="Active"
+                                        press="onAppPress"
+                                        visible="{view>/access/app_manageVendors}"
+                                        data:appKey="manageVendors" data:appLabel="Manage Vendors">
+                                        <HBox id="appManageVendorsBox"
+                                            class="appCardItem sapUiSmallPadding"
+                                            alignItems="Center">
+                                            <core:Icon src="sap-icon://supplier" size="1.75rem"
+                                                color="#0d1f35" class="sapUiMediumMarginEnd" />
+                                            <VBox>
+                                                <Title text="Manage Vendors" level="H5" />
+                                                <Text text="Master data and performance scores"
+                                                    class="sapMAnnotatedText" />
+                                            </VBox>
+                                        </HBox>
+                                    </f:GridListItem>
+
+                                    <f:GridListItem id="appCompareQuotations" type="Active"
+                                        press="onAppPress"
+                                        visible="{view>/access/app_compareQuotations}"
+                                        data:appKey="compareQuotations"
+                                        data:appLabel="Compare Quotations">
+                                        <HBox id="appCompareQuotationsBox"
+                                            class="appCardItem sapUiSmallPadding"
+                                            alignItems="Center">
+                                            <core:Icon src="sap-icon://compare" size="1.75rem"
+                                                color="#f28516" class="sapUiMediumMarginEnd" />
+                                            <VBox>
+                                                <Title text="Compare Quotations" level="H5" />
+                                                <Text text="Evaluate bids and select vendor"
+                                                    class="sapMAnnotatedText" />
+                                            </VBox>
+                                        </HBox>
+                                    </f:GridListItem>
+
+                                    <f:GridListItem id="appCreatePO" type="Active"
+                                        press="onAppPress" visible="{view>/access/app_createPO}"
+                                        data:appKey="createPO" data:appLabel="Create Purchase Order">
+                                        <HBox id="appCreatePOBox"
+                                            class="appCardItem sapUiSmallPadding"
+                                            alignItems="Center">
+                                            <core:Icon src="sap-icon://sales-order" size="1.75rem"
+                                                color="#7d3aed" class="sapUiMediumMarginEnd" />
+                                            <VBox>
+                                                <Title text="Create Purchase Order" level="H5" />
+                                                <Text text="Generate vendor PO"
+                                                    class="sapMAnnotatedText" />
+                                            </VBox>
+                                        </HBox>
+                                    </f:GridListItem>
+
+                                    <f:GridListItem id="appTrackDeliveries" type="Active"
+                                        press="onAppPress"
+                                        visible="{view>/access/app_trackDeliveries}"
+                                        data:appKey="trackDeliveries"
+                                        data:appLabel="Track Deliveries">
+                                        <HBox id="appTrackDeliveriesBox"
+                                            class="appCardItem sapUiSmallPadding"
+                                            alignItems="Center">
+                                            <core:Icon src="sap-icon://shipping-status"
+                                                size="1.75rem" color="#5b21b6"
+                                                class="sapUiMediumMarginEnd" />
+                                            <VBox>
+                                                <Title text="Track Deliveries" level="H5" />
+                                                <Text text="Monitor shipments and ETA"
+                                                    class="sapMAnnotatedText" />
+                                            </VBox>
+                                        </HBox>
+                                    </f:GridListItem>
+
+                                    <f:GridListItem id="appPostGR" type="Active" press="onAppPress"
+                                        visible="{view>/access/app_postGR}" data:appKey="postGR"
+                                        data:appLabel="Post Goods Receipt">
+                                        <HBox id="appPostGRBox"
+                                            class="appCardItem sapUiSmallPadding"
+                                            alignItems="Center">
+                                            <core:Icon src="sap-icon://receipt" size="1.75rem"
+                                                color="#0f8b8d" class="sapUiMediumMarginEnd" />
+                                            <VBox>
+                                                <Title text="Post Goods Receipt" level="H5" />
+                                                <Text text="Verify site material delivery"
+                                                    class="sapMAnnotatedText" />
+                                            </VBox>
+                                        </HBox>
+                                    </f:GridListItem>
+
+                                    <f:GridListItem id="appReportDamage" type="Active"
+                                        press="onAppPress" visible="{view>/access/app_reportDamage}"
+                                        data:appKey="reportDamage"
+                                        data:appLabel="Report Damaged Materials">
+                                        <HBox id="appReportDamageBox"
+                                            class="appCardItem sapUiSmallPadding"
+                                            alignItems="Center">
+                                            <core:Icon src="sap-icon://quality-issue" size="1.75rem"
+                                                color="#d32030" class="sapUiMediumMarginEnd" />
+                                            <VBox>
+                                                <Title text="Report Damaged Materials" level="H5" />
+                                                <Text text="Initiate vendor claim process"
+                                                    class="sapMAnnotatedText" />
+                                            </VBox>
+                                        </HBox>
+                                    </f:GridListItem>
+
+                                    <f:GridListItem id="appValidateInvoice" type="Active"
+                                        press="onAppPress"
+                                        visible="{view>/access/app_validateInvoice}"
+                                        data:appKey="validateInvoice"
+                                        data:appLabel="Validate Supplier Invoice">
+                                        <HBox id="appValidateInvoiceBox"
+                                            class="appCardItem sapUiSmallPadding"
+                                            alignItems="Center">
+                                            <core:Icon src="sap-icon://my-sales-order"
+                                                size="1.75rem" color="#166b48"
+                                                class="sapUiMediumMarginEnd" />
+                                            <VBox>
+                                                <Title text="Validate Supplier Invoice" level="H5" />
+                                                <Text text="Three-way match and approve"
+                                                    class="sapMAnnotatedText" />
+                                            </VBox>
+                                        </HBox>
+                                    </f:GridListItem>
+
+                                    <f:GridListItem id="appProjectHealth" type="Active"
+                                        press="onAppPress"
+                                        visible="{view>/access/app_projectHealth}"
+                                        data:appKey="projectHealth"
+                                        data:appLabel="View Project Health">
+                                        <HBox id="appProjectHealthBox"
+                                            class="appCardItem sapUiSmallPadding"
+                                            alignItems="Center">
+                                            <core:Icon src="sap-icon://line-chart-time-axis"
+                                                size="1.75rem" color="#0d1f35"
+                                                class="sapUiMediumMarginEnd" />
+                                            <VBox>
+                                                <Title text="View Project Health" level="H5" />
+                                                <Text text="Budget and procurement insights"
+                                                    class="sapMAnnotatedText" />
+                                            </VBox>
+                                        </HBox>
+                                    </f:GridListItem>
+
+                                    <f:GridListItem id="appManagementOverview" type="Active"
+                                        press="onAppPress"
+                                        visible="{view>/access/app_managementOverview}"
+                                        data:appKey="managementOverview"
+                                        data:appLabel="Management Overview Dashboard">
+                                        <HBox id="appManagementOverviewBox"
+                                            class="appCardItem sapUiSmallPadding"
+                                            alignItems="Center">
+                                            <core:Icon src="sap-icon://manager-insight"
+                                                size="1.75rem" color="#0d1f35"
+                                                class="sapUiMediumMarginEnd" />
+                                            <VBox>
+                                                <Title text="Management Overview" level="H5" />
+                                                <Text
+                                                    text="OVP for budget, GRN, vendors and invoices"
+                                                    class="sapMAnnotatedText" />
+                                            </VBox>
+                                        </HBox>
+                                    </f:GridListItem>
+
+                                    <f:GridListItem id="appGRNAnalytics" type="Active"
+                                        press="onAppPress" visible="{view>/access/app_grnAnalytics}"
+                                        data:appKey="grnAnalytics"
+                                        data:appLabel="GRN Receipt Analytics">
+                                        <HBox id="appGRNAnalyticsBox"
+                                            class="appCardItem sapUiSmallPadding"
+                                            alignItems="Center">
+                                            <core:Icon src="sap-icon://analytical-chart"
+                                                size="1.75rem" color="#0f8b8d"
+                                                class="sapUiMediumMarginEnd" />
+                                            <VBox>
+                                                <Title text="GRN Receipt Analytics" level="H5" />
+                                                <Text text="Filter, chart and drill down by status"
+                                                    class="sapMAnnotatedText" />
+                                            </VBox>
+                                        </HBox>
+                                    </f:GridListItem>
+                                </f:GridList>
+                            </IconTabFilter>
+
+                            <IconTabFilter id="tabRecent" text="Recently Used" key="recent">
+                                <Text id="recentText" text="No recently used apps."
+                                    class="subtleEmptyText sapUiSmallMargin" />
+                            </IconTabFilter>
+
+                            <IconTabFilter id="tabFrequent" text="Frequently Used" key="frequent">
+                                <Text id="frequentText"
+                                    text="Frequent apps will appear here based on usage."
+                                    class="subtleEmptyText sapUiSmallMargin" />
+                            </IconTabFilter>
+                        </items>
+                    </IconTabBar>
+                </VBox>
+
+                <HBox justifyContent="SpaceBetween" alignItems="Center" wrap="Wrap"
+                    class="footerShell">
+                    <VBox class="sapUiTinyMarginBottom">
+                        <Title text="SolarSage EPC" level="H4"
+                            class="footerBrand sapUiTinyMarginBottom" />
+                        <Text
+                            text="Unified project, procurement, site operations, and finance workspace for solar EPC teams."
+                            class="footerCopy" />
+                    </VBox>
+                    <HBox alignItems="Center" wrap="Wrap">
+                        <HBox alignItems="Center"
+                            class="footerTag sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                            <core:Icon src="sap-icon://shield" size="0.75rem"
+                                class="sapUiTinyMarginEnd" />
+                            <Text text="Role-aware access" />
+                        </HBox>
+                        <HBox alignItems="Center"
+                            class="footerTag sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                            <core:Icon src="sap-icon://process" size="0.75rem"
+                                class="sapUiTinyMarginEnd" />
+                            <Text text="P2P workflow enabled" />
+                        </HBox>
+                        <Text
+                            text="Version 1.0 | Design system aligned to SolarSage operational dashboards"
+                            class="footerMeta sapUiTinyMarginBottom" />
+                    </HBox>
+                </HBox>
+
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

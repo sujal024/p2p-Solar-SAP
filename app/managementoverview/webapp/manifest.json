@@ -1,0 +1,153 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "solar.epc.managementoverview",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "Management Overview",
+    "description": "OVP — Budget, GRN, Vendor & Invoice KPIs",
+    "dataSources": {
+      "dashboardService": {
+        "uri": "/dashboard/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.147.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ovp": {},
+        "sap.viz": {},
+        "sap.ui.comp": {}
+      }
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "solar.epc.managementoverview.i18n.i18n"
+        }
+      },
+      "dashboardService": {
+        "dataSource": "dashboardService",
+        "settings": {
+          "operationMode": "Server"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "sap.ovp.app.Main",
+      "type": "XML",
+      "id": "mainView"
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    }
+  },
+  "sap.ovp": {
+    "globalFilterModel": "dashboardService",
+    "containerLayout": "resizable",
+    "cards": {
+      "card01_budget": {
+        "model": "dashboardService",
+        "template": "sap.ovp.cards.v4.table",
+        "settings": {
+          "title": "Budget Utilization",
+          "subTitle": "Spent vs Remaining by Project",
+          "entitySet": "ProjectSummary",
+          "tableType": "ResponsiveTable",
+          "addODataSelect": true
+        }
+      },
+      "card02_receipt_quality": {
+        "model": "dashboardService",
+        "template": "sap.ovp.cards.v4.table",
+        "settings": {
+          "title": "GRN Receipt Quality",
+          "subTitle": "Accepted vs Rejected Qty by Project",
+          "entitySet": "ReceiptQuality",
+          "tableType": "ResponsiveTable",
+          "addODataSelect": true
+        }
+      },
+      "card03_vendors": {
+        "model": "dashboardService",
+        "template": "sap.ovp.cards.v4.table",
+        "settings": {
+          "title": "Vendor Performance",
+          "subTitle": "Overall Score Distribution",
+          "entitySet": "VendorPerformanceSummary",
+          "tableType": "ResponsiveTable",
+          "addODataSelect": true
+        }
+      },
+      "card04_procurement": {
+        "model": "dashboardService",
+        "template": "sap.ovp.cards.v4.table",
+        "settings": {
+          "title": "Procurement KPIs",
+          "subTitle": "Purchase Orders by Project",
+          "entitySet": "ProcurementKPI",
+          "tableType": "ResponsiveTable",
+          "addODataSelect": true
+        }
+      },
+      "card05_invoices": {
+        "model": "dashboardService",
+        "template": "sap.ovp.cards.v4.list",
+        "settings": {
+          "title": "Invoice Matching Status",
+          "subTitle": "Matched, Approved and Paid by Vendor",
+          "entitySet": "InvoiceMatchingSummary",
+          "listFlavor": "condensed",
+          "addODataSelect": true
+        }
+      },
+      "card06_delivery": {
+        "model": "dashboardService",
+        "template": "sap.ovp.cards.v4.table",
+        "settings": {
+          "title": "Delivery Performance",
+          "subTitle": "On-Time vs Delayed by Vendor",
+          "entitySet": "DeliveryPerformance",
+          "tableType": "ResponsiveTable",
+          "addODataSelect": true
+        }
+      },
+      "card07_threeway": {
+        "model": "dashboardService",
+        "template": "sap.ovp.cards.v4.table",
+        "settings": {
+          "title": "3-Way Match Summary",
+          "subTitle": "Match Status by Project",
+          "entitySet": "ThreeWayMatchSummary",
+          "tableType": "ResponsiveTable",
+          "addODataSelect": true
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "analytical"
+  }
+}

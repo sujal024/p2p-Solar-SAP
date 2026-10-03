@@ -1,0 +1,170 @@
+/* ── Design tokens ───────────────────────────────────────────────────────── */
+:root {
+    --sol-navy:      #0d1f35;
+    --sol-navy-mid:  #1a3a5c;
+    --sol-green:     #1a5c4e;
+    --sol-accent:    #27c88a;
+    --sol-muted:     rgba(255, 255, 255, 0.45);
+    --sol-border:    rgba(255, 255, 255, 0.08);
+    --sol-cta:       #fb8500;
+    --sol-cta-warm:  #ffb703;
+}
+
+.appRouteBanner {
+    padding: 0.75rem 1.25rem 0;
+    background: #f5f6f7;
+}
+
+.appRouteBannerInner {
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.9rem 2rem 1.2rem;
+    border-radius: 2rem;
+    background: linear-gradient(135deg, var(--sol-navy) 0%, var(--sol-navy-mid) 100%);
+    box-shadow: 0 12px 32px rgba(13, 31, 53, 0.22);
+    position: relative;
+    overflow: hidden;
+}
+
+.appRouteBannerInner::after {
+    content: "";
+    position: absolute;
+    right: -2rem;
+    bottom: -3rem;
+    width: 14rem;
+    height: 14rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.appRouteBannerCopy {
+    max-width: 48rem;
+    flex: 1 1 38rem;
+}
+
+.appRouteBannerEyebrow {
+    color: rgba(255, 255, 255, 0.72) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.4rem !important;
+}
+
+.appRouteBannerTitle {
+    color: #ffffff !important;
+    margin: 0 0 0.7rem !important;
+    line-height: 1.2 !important;
+    font-size: 2.2rem !important;
+    max-width: 42rem;
+}
+
+.appRouteBannerText {
+    color: rgba(255, 255, 255, 0.84) !important;
+    line-height: 1.65 !important;
+    font-size: 1rem !important;
+    max-width: 46rem;
+}
+
+.appRouteBannerFieldLabel {
+    color: rgba(255, 255, 255, 0.72) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.76rem !important;
+    font-weight: 700 !important;
+    margin-top: 1.4rem !important;
+}
+
+.appRouteBannerOrbit {
+    min-width: 18rem;
+    max-width: 22rem;
+    padding: 1.3rem 1.55rem;
+    border-radius: 1.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    flex: 0 0 22rem;
+}
+
+.appRouteBannerOrbitEyebrow {
+    color: rgba(255, 255, 255, 0.68) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.85rem !important;
+}
+
+.appRouteBannerOrbitText {
+    color: #ffffff !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    line-height: 1.5 !important;
+}
+
+.appRouteBannerActions {
+    gap: 0.7rem;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.appRouteBannerBackBtn .sapMBtnInner {
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    color: #ffffff;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.appRouteBannerNextBtn .sapMBtnInner {
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, var(--sol-cta-warm) 0%, var(--sol-cta) 100%);
+    color: #18273b;
+    font-weight: 700;
+    text-shadow: none;
+    box-shadow: 0 8px 18px rgba(251, 133, 0, 0.22);
+    min-width: 13rem;
+}
+
+.appRouteBannerNextBtn .sapMBtnIcon {
+    color: #18273b;
+}
+
+@media (max-width: 900px) {
+    .appRouteBanner {
+        padding: 0.75rem 0.75rem 0;
+    }
+
+    .appRouteBannerInner {
+        padding: 1rem;
+        border-radius: 1rem;
+    }
+
+    .appRouteBannerTitle {
+        font-size: 1.6rem !important;
+    }
+
+    .appRouteBannerOrbit {
+        min-width: 100%;
+        max-width: none;
+        flex: 1 1 100%;
+    }
+
+    .appRouteBannerActions {
+        width: 100%;
+        justify-content: stretch;
+    }
+
+    .appRouteBannerBackBtn,
+    .appRouteBannerNextBtn {
+        width: 100%;
+    }
+
+    .appRouteBannerBackBtn .sapMBtnInner,
+    .appRouteBannerNextBtn .sapMBtnInner {
+        width: 100%;
+        justify-content: center;
+    }
+}

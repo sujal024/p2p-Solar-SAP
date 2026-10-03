@@ -1,0 +1,140 @@
+{
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Management",
+      "description": "Management"
+    },
+    {
+      "name": "$XSAPPNAME.ProjectManager",
+      "description": "ProjectManager"
+    },
+    {
+      "name": "$XSAPPNAME.FinanceOfficer",
+      "description": "FinanceOfficer"
+    },
+    {
+      "name": "$XSAPPNAME.ProcurementOfficer",
+      "description": "ProcurementOfficer"
+    },
+    {
+      "name": "$XSAPPNAME.SiteEngineer",
+      "description": "SiteEngineer"
+    },
+    {
+      "name": "$XSAPPNAME.BDM",
+      "description": "BDM"
+    },
+    {
+      "name": "$XSAPPNAME.Engineer",
+      "description": "Engineer"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "Management",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.Management"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "ProjectManager",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.ProjectManager"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "FinanceOfficer",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.FinanceOfficer"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "ProcurementOfficer",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.ProcurementOfficer"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "SiteEngineer",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.SiteEngineer"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "BDM",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.BDM"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "Engineer",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.Engineer"
+      ],
+      "attribute-references": []
+    }
+  ],
+  "tenant-mode": "dedicated",
+  "role-collections": [
+    {
+      "name": "SolarEPC_Management",
+      "description": "Full management access — all modules",
+      "role-template-references": [
+        "$XSAPPNAME.Management",
+        "$XSAPPNAME.ProjectManager",
+        "$XSAPPNAME.ProcurementOfficer",
+        "$XSAPPNAME.FinanceOfficer"
+      ]
+    },
+    {
+      "name": "SolarEPC_Procurement",
+      "description": "Procurement Officer access",
+      "role-template-references": [
+        "$XSAPPNAME.ProcurementOfficer"
+      ]
+    },
+    {
+      "name": "SolarEPC_Finance",
+      "description": "Finance Officer access",
+      "role-template-references": [
+        "$XSAPPNAME.FinanceOfficer"
+      ]
+    },
+    {
+      "name": "SolarEPC_Engineer",
+      "description": "Engineer + Site Engineer access",
+      "role-template-references": [
+        "$XSAPPNAME.Engineer",
+        "$XSAPPNAME.SiteEngineer"
+      ]
+    },
+    {
+      "name": "SolarEPC_ProjectManager",
+      "description": "Senior Engineer / PM access",
+      "role-template-references": [
+        "$XSAPPNAME.ProjectManager"
+      ]
+    },
+    {
+      "name": "SolarEPC_BDM",
+      "description": "Business Development Manager",
+      "role-template-references": [
+        "$XSAPPNAME.BDM"
+      ]
+    }
+  ]
+}

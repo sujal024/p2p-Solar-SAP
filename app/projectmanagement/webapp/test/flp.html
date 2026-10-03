@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLP Sandbox — Solar EPC Project Management</title>
+    <script>
+        window["sap-ushell-config"] = {
+            defaultRenderer: "fiori2",
+            renderers: {
+                fiori2: {
+                    componentData: {
+                        config: { search: "hidden" }
+                    }
+                }
+            },
+            services: {
+                LaunchPage: {
+                    adapter: {
+                        config: {
+                            catalogs: [],
+                            groups: [
+                                {
+                                    id: "group0",
+                                    title: "Solar EPC",
+                                    tiles: [
+                                        {
+                                            id: "tile0",
+                                            tileType: "sap.ushell.ui.tile.StaticTile",
+                                            properties: {
+                                                title: "Project Management",
+                                                icon: "sap-icon://project-definition-triangle",
+                                                targetURL: "#app-preview"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                ClientSideTargetResolution: {
+                    adapter: {
+                        config: {
+                            inbounds: {
+                                "app-preview": {
+                                    semanticObject: "app",
+                                    action: "preview",
+                                    title: "Project Management",
+                                    signature: {
+                                        parameters: {},
+                                        additionalParameters: "allowed"
+                                    },
+                                    resolutionResult: {
+                                        ui5ComponentName: "solar.epc.projectmanagement",
+                                        applicationType: "URL",
+                                        url: "../../",
+                                        componentData: {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+    <!-- Sandbox bootstrap must come BEFORE sap-ui-core — it initialises sap.ushell.Container -->
+    <script src="https://sapui5.hana.ondemand.com/1.147.1/test-resources/sap/ushell/bootstrap/sandbox.js"></script>
+
+    <script id="sap-ui-bootstrap"
+        src="https://sapui5.hana.ondemand.com/1.147.1/resources/sap-ui-core.js"
+        data-sap-ui-libs="sap.m,sap.ui.layout,sap.ui.unified,sap.fe.templates"
+        data-sap-ui-compat-version="edge"
+        data-sap-ui-async="true"
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-frame-options="allow"
+        data-sap-ui-resource-roots='{"solar.epc.projectmanagement": "../../"}'>
+    </script>
+
+    <script>
+        sap.ui.getCore().attachInit(function () {
+            sap.ushell.Container.createRenderer("fiori2", true).then(function (oContent) {
+                document.body.style.display = "flex";
+                document.body.style.height  = "100%";
+                document.body.appendChild(oContent);
+            });
+        });
+    </script>
+</head>
+<body class="sapUiBody" id="content"></body>
+</html>

@@ -1,0 +1,243 @@
+<mvc:View
+    controllerName="solar.epc.projectmanagement.vendor.QuotationComparison"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:m="sap.m"
+    xmlns:layout="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    height="100%">
+    <m:Page>
+        <m:subHeader>
+            <m:Toolbar class="quotationTopBar">
+                <m:Button
+                    icon="sap-icon://nav-back"
+                    text="Back to Home"
+                    type="Transparent"
+                    press=".onNavBack"
+                    class="quotationBackBtn" />
+                <m:ToolbarSeparator class="quotationTopBarSep" />
+                <m:HBox alignItems="Center" class="sapUiTinyMarginEnd">
+                    <m:HBox alignItems="Center" justifyContent="Center" class="quotationTopBarIconShell sapUiTinyMarginEnd">
+                        <core:Icon src="sap-icon://compare" color="#ffffff" size="0.95rem" />
+                    </m:HBox>
+                    <m:VBox>
+                        <m:Title text="Quotation Evaluation" level="H6" class="quotationTopBarTitle" />
+                        <m:Text text="SolarSage EPC · Vendor comparison workspace" class="quotationTopBarSub" />
+                    </m:VBox>
+                </m:HBox>
+                <m:ToolbarSpacer />
+                <m:HBox alignItems="Center" class="quotationLiveBadge">
+                    <core:Icon src="sap-icon://circle-task-2" size="0.55rem" />
+                    <m:Text text="LIVE" />
+                </m:HBox>
+            </m:Toolbar>
+        </m:subHeader>
+        <m:content>
+            <m:VBox class="quotationComparisonPage">
+                <m:VBox class="quotationHeroCard quotationFadeUp">
+                    <m:HBox justifyContent="SpaceBetween" wrap="Wrap" class="sapUiSmallMarginBottom">
+                        <m:VBox class="quotationHeroCopy">
+                            <m:Text text="Vendor Evaluation Workspace" class="quotationHeroEyebrow" />
+                            <m:Title
+                                text="Compare quotations with project context, commercial clarity, and award confidence."
+                                level="H1" class="quotationHeroTitle" />
+                            <m:Text
+                                text="Select a sourcing-ready material request to reveal an executive-style comparison surface with richer MR details, pricing signals, and actionable vendor decisions."
+                                class="quotationHeroText" />
+                        </m:VBox>
+                        <m:VBox class="quotationHeroOrbit">
+                            <m:Text text="Decision Canvas" class="quotationHeroOrbitLabel" />
+                            <m:Text text="Commercial + timeline + project context"
+                                class="quotationHeroOrbitValue" />
+                        </m:VBox>
+                    </m:HBox>
+
+                    <m:HBox alignItems="End" justifyContent="SpaceBetween">
+                        <m:VBox width="340px" class="quotationControlBlock sapUiSmallMarginEnd">
+
+                            <m:Label text="Material Request" class="quotationFieldLabel" />
+                            <m:Select
+                                id="mrSelect"
+                                forceSelection="false"
+                                items="{view>/materialRequests}"
+                                change=".onMRSelectChange"
+                                width="100%"
+                                class="quotationSelect">
+                                <core:Item
+                                    key="{view>ID}"
+                                    text="{view>requestNumber} - {view>project/projectName}" />
+                            </m:Select>
+                        </m:VBox>
+                        <m:Button
+                            id="compareButton"
+                            text="Compare Quotations"
+                            type="Emphasized"
+                            enabled="false"
+                            press=".onCompare"
+                            icon="sap-icon://business-objects-experience"
+                            class="quotationCompareBtn" />
+                    </m:HBox>
+                </m:VBox>
+
+                <m:VBox
+                    visible="{= !!${view>/selectedMR/ID} }"
+                    class="quotationMRSpotlight quotationFadeUp quotationFadeDelay1">
+                    <m:HBox justifyContent="SpaceBetween" wrap="Wrap" class="sapUiSmallMarginBottom">
+                        <m:VBox class="quotationMRHeader">
+                            <m:Text text="{view>/selectedMRDetails/projectCode}"
+                                class="quotationSectionEyebrow" />
+                            <m:Title
+                                text="{view>/selectedMR/requestNumber} - {view>/selectedMRDetails/projectName}"
+                                level="H2" class="quotationMRTitle" />
+                            <m:Text text="{view>/selectedMRDetails/longDescription}"
+                                class="quotationMRDescription" />
+                        </m:VBox>
+                        <m:VBox class="quotationStatusBadgeWrap">
+                            <m:ObjectStatus
+                                text="{view>/selectedMR/status}"
+                                state="{view>/selectedMRDetails/statusState}"
+                                class="quotationStatusBadge" />
+                        </m:VBox>
+                    </m:HBox>
+
+                    <m:HBox wrap="Wrap" class="quotationMetaGrid">
+                        <m:VBox class="quotationMetaCard">
+                            <m:Text text="Request raised" class="quotationMetaLabel" />
+                            <m:Title text="{view>/selectedMRDetails/requestDateText}" level="H5"
+                                class="quotationMetaValue" />
+                        </m:VBox>
+                        <m:VBox class="quotationMetaCard">
+                            <m:Text text="Required on site" class="quotationMetaLabel" />
+                            <m:Title text="{view>/selectedMRDetails/requiredDateText}" level="H5"
+                                class="quotationMetaValue" />
+                        </m:VBox>
+                        <m:VBox class="quotationMetaCard">
+                            <m:Text text="{view>/selectedMRDetails/remarksLabel}"
+                                class="quotationMetaLabel" />
+                            <m:Text text="{view>/selectedMRDetails/remarksText}"
+                                class="quotationMetaNarrative" />
+                        </m:VBox>
+                        <m:VBox class="quotationMetaCard">
+                            <m:Text text="{view>/selectedMRDetails/overviewTitle}"
+                                class="quotationMetaLabel" />
+                            <m:Text text="{view>/selectedMRDetails/commercialNote}"
+                                class="quotationMetaNarrative" />
+                        </m:VBox>
+                    </m:HBox>
+                </m:VBox>
+
+                <m:HBox
+                    visible="{= ${view>/stats/totalQuotations} > 0 }"
+                    wrap="Wrap"
+                    class="quotationStatsGrid quotationFadeUp quotationFadeDelay2">
+                    <m:VBox class="quotationStatCard quotationStatAccentA">
+                        <m:Text text="Total Quotations" class="quotationStatLabel" />
+                        <m:Title text="{view>/stats/totalQuotations}" level="H3"
+                            class="quotationStatValue" />
+                    </m:VBox>
+                    <m:VBox class="quotationStatCard quotationStatAccentB">
+                        <m:Text text="Best Price" class="quotationStatLabel" />
+                        <m:Title text="{= 'INR ' + ${view>/stats/bestPrice} }" level="H3"
+                            class="quotationStatValue" />
+                    </m:VBox>
+                    <m:VBox class="quotationStatCard quotationStatAccentC">
+                        <m:Text text="Best Vendor" class="quotationStatLabel" />
+                        <m:Title text="{view>/stats/bestVendor}" level="H3"
+                            class="quotationStatValue" />
+                    </m:VBox>
+                    <m:VBox class="quotationStatCard quotationStatAccentD">
+                        <m:Text text="Average Price" class="quotationStatLabel" />
+                        <m:Title text="{= 'INR ' + ${view>/stats/avgPrice} }" level="H3"
+                            class="quotationStatValue" />
+                    </m:VBox>
+                    <m:VBox class="quotationStatCard quotationStatAccentE">
+                        <m:Text text="Fastest Delivery" class="quotationStatLabel" />
+                        <m:Title text="{= ${view>/stats/fastestDelivery} + ' Days' }" level="H3"
+                            class="quotationStatValue" />
+                    </m:VBox>
+                    <m:VBox class="quotationStatCard quotationStatAccentF">
+                        <m:Text text="Savings vs Avg" class="quotationStatLabel" />
+                        <m:Title text="{view>/stats/savingsVsAvg}" level="H3"
+                            class="quotationStatValue" />
+                    </m:VBox>
+                </m:HBox>
+
+                <m:VBox
+                    visible="{= ${view>/quotations}.length > 0 }"
+                    class="quotationTableShell quotationFadeUp quotationFadeDelay3">
+                    <m:HBox justifyContent="SpaceBetween" wrap="Wrap" class="sapUiSmallMarginBottom">
+                        <m:VBox>
+                            <m:Text text="Evaluation Matrix" class="quotationSectionEyebrow" />
+                            <m:Title text="Vendor Quotations" level="H2" class="quotationTableTitle" />
+                        </m:VBox>
+                        <m:Text
+                            text="Best-price rows are highlighted so your preferred option stands out immediately."
+                            class="quotationTableHint" />
+                    </m:HBox>
+
+                    <m:Table
+                        items="{view>/quotations}"
+                        class="quotationTable">
+                        <m:columns>
+                            <m:Column>
+                                <m:Text text="Vendor" />
+                            </m:Column>
+                            <m:Column>
+                                <m:Text text="Quotation Number" />
+                            </m:Column>
+                            <m:Column hAlign="End">
+                                <m:Text text="Total Amount" />
+                            </m:Column>
+                            <m:Column hAlign="Center">
+                                <m:Text text="Lead Days" />
+                            </m:Column>
+                            <m:Column hAlign="End">
+                                <m:Text text="Savings vs Avg" />
+                            </m:Column>
+                            <m:Column hAlign="Center">
+                                <m:Text text="Action" />
+                            </m:Column>
+                        </m:columns>
+                        <m:items>
+                            <m:ColumnListItem
+                                vAlign="Middle"
+                                class="{= ${view>isBestPrice} ? 'quotationTableRow quotationTableRowBest' : 'quotationTableRow' }">
+                                <m:cells>
+                                    <m:VBox>
+                                        <m:ObjectIdentifier
+                                            title="{view>vendor/vendorName}"
+                                            text="{view>vendor/vendorCode}" />
+                                        <m:ObjectStatus
+                                            text="{= ${view>isBestPrice} ? 'Best commercial' : (${view>status} || 'Under review') }"
+                                            state="{= ${view>isBestPrice} ? 'Success' : 'Information' }"
+                                            class="quotationRowTag" />
+                                    </m:VBox>
+                                    <m:VBox>
+                                        <m:Text text="{view>quotationNumber}"
+                                            class="quotationPrimaryCell" />
+                                        <m:Text
+                                            text="{= 'Validity: ' + (${view>validityDate} || 'TBD') }"
+                                            class="quotationSecondaryCell" />
+                                    </m:VBox>
+                                    <m:ObjectNumber
+                                        number="{view>totalAmount}"
+                                        unit="INR"
+                                        state="{= ${view>isBestPrice} ? 'Success' : 'None' }" />
+                                    <m:ObjectStatus
+                                        text="{= ${view>deliveryLeadDays} + ' days' }"
+                                        state="{= ${view>deliveryLeadDays} &lt;= 12 ? 'Success' : (${view>deliveryLeadDays} &lt;= 20 ? 'Warning' : 'Error') }" />
+                                    <m:Text text="{= ${view>savingsVsAvg} || 'Best benchmark' }" />
+                                    <m:Button
+                                        text="Select Vendor"
+                                        type="Accept"
+                                        press=".onSelectVendor"
+                                        enabled="{= ${view>status} !== 'SELECTED' }"
+                                        class="quotationActionBtn" />
+                                </m:cells>
+                            </m:ColumnListItem>
+                        </m:items>
+                    </m:Table>
+                </m:VBox>
+            </m:VBox>
+        </m:content>
+    </m:Page>
+</mvc:View>

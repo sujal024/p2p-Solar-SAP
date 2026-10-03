@@ -1,0 +1,138 @@
+{
+  "requires": {
+    "db": {
+      "kind": "sqlite",
+      "credentials": {
+        "database": "solar_epc.db"
+      }
+    },
+    "RAP_SERVICE": {
+      "kind": "odata-v2",
+      "credentials": {
+        "url": "https://mtsapserver6g.themdlabs.com:44300/sap/opu/odata/sap/ZUI_MAT_RECEIPT_BIND",
+        "username": "ALAPRUX04",
+        "password": "Alchemy@2026",
+        "rejectUnauthorized": false,
+        "csrf": true,
+        "csrfInSession": true,
+        "headers": {
+          "sap-client": "100"
+        }
+      }
+    },
+    "SEGW_DELIVERY_SRV": {
+      "kind": "odata-v2",
+      "credentials": {
+        "url": "http://mtsapserver6g.themdlabs.com:8000/sap/opu/odata/sap/ZSOLAR_DELIVERY_SRV_SRV",
+        "username": "ALAPRUX04",
+        "password": "Alchemy@2026",
+        "rejectUnauthorized": false,
+        "csrf": true,
+        "csrfInSession": true,
+        "headers": {
+          "sap-client": "100"
+        }
+      }
+    }
+  },
+  "[development]": {
+    "requires": {
+      "auth": {
+        "kind": "mocked",
+        "users": {
+          "bdm1": {
+            "password": "pass",
+            "roles": [
+              "BDM"
+            ],
+            "attr": {
+              "name": "Arjun Reddy"
+            }
+          },
+          "engineer1": {
+            "password": "pass",
+            "roles": [
+              "Engineer"
+            ],
+            "attr": {
+              "name": "Rajesh Kumar"
+            }
+          },
+          "pm1": {
+            "password": "pass",
+            "roles": [
+              "ProjectManager"
+            ],
+            "attr": {
+              "name": "Priya Sharma"
+            }
+          },
+          "proc1": {
+            "password": "pass",
+            "roles": [
+              "ProcurementOfficer"
+            ],
+            "attr": {
+              "name": "Amit Patel"
+            }
+          },
+          "site1": {
+            "password": "pass",
+            "roles": [
+              "SiteEngineer"
+            ],
+            "attr": {
+              "name": "Suresh Singh"
+            }
+          },
+          "finance1": {
+            "password": "pass",
+            "roles": [
+              "FinanceOfficer"
+            ],
+            "attr": {
+              "name": "Meena Iyer"
+            }
+          },
+          "mgmt1": {
+            "password": "pass",
+            "roles": [
+              "Management",
+              "ProjectManager",
+              "ProcurementOfficer",
+              "FinanceOfficer"
+            ],
+            "attr": {
+              "name": "Vikram Mehta"
+            }
+          },
+          "admin": {
+            "password": "admin",
+            "roles": [
+              "*"
+            ]
+          },
+          "priyanshu.uict22@sot.pdpu.ac.in": {
+            "password": "pass",
+            "roles": [
+              "BDM",
+              "Engineer",
+              "ProjectManager",
+              "Management",
+              "ProcurementOfficer",
+              "SiteEngineer",
+              "FinanceOfficer"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "features": {
+    "draft_compat": true,
+    "odata_new_parser": true
+  },
+  "odata": {
+    "flavour": "w4"
+  }
+}

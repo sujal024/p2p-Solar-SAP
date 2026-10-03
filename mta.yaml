@@ -1,0 +1,102 @@
+_schema-version: 3.3.0
+ID: maha_project
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+modules:
+  - name: maha_project-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      instances: 1
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: maha_project-auth
+      - name: maha_project-destination
+  - name: maha_project
+    type: approuter.nodejs
+    path: app/router
+    parameters:
+      keep-existing-routes: true
+      disk-quota: 256M
+      memory: 256M
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api # must be used in xs-app.json as well
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: maha_project-auth
+      - name: maha_project-destination
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
+
+resources:
+  - name: maha_project-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: maha_project-${org}-${space}
+        tenant-mode: dedicated
+        oauth2-configuration:
+          credential-types:
+            - "binding-secret"
+            - "x509"
+          redirect-uris:
+            - https://*~{app-api/app-uri}/**
+        role-collections:
+          - name: 'Management (maha_project ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.Management'
+          - name: 'ProjectManager (maha_project ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.ProjectManager'
+          - name: 'FinanceOfficer (maha_project ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.FinanceOfficer'
+          - name: 'ProcurementOfficer (maha_project ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.ProcurementOfficer'
+          - name: 'SiteEngineer (maha_project ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.SiteEngineer'
+          - name: 'BDM (maha_project ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.BDM'
+          - name: 'Engineer (maha_project ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.Engineer'
+    requires:
+      - name: app-api
+  - name: maha_project-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite

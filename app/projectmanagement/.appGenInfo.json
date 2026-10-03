@@ -1,0 +1,32 @@
+{
+  "generationParameters": {
+    "generationDate": "Sun Apr 26 2026 19:11:28 GMT+0000 (Coordinated Universal Time)",
+    "generatorPlatform": "SAP Business Application Studio",
+    "serviceType": "Local CAP",
+    "metadataFilename": "",
+    "serviceUrl": "http://localhost:4004/project/",
+    "appName": "projectmanagement",
+    "appTitle": "Project Management",
+    "appDescription": "An SAP Fiori application.",
+    "appNamespace": "solar.epc",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.147.1",
+    "enableEslint": true,
+    "enableTypeScript": false,
+    "showMockDataInfo": false,
+    "generatorVersion": "1.22.0",
+    "template": "List Report Page V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [
+      {
+        "type": "Main Entity",
+        "value": "Projects"
+      },
+      {
+        "type": "Navigation Entity",
+        "value": "None"
+      }
+    ],
+    "launchText": "To launch the generated app, start your CAP project:  and navigate to the following location in your browser:\n\nhttp://localhost:4004/projectmanagement/webapp/index.html"
+  }
+}

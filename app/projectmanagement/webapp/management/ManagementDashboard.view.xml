@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mvc:View
+    controllerName="solar.epc.projectmanagement.management.ManagementDashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    displayBlock="true">
+
+    <Page id="page" title="Management Overview" showNavButton="true" navButtonPress="onNavBack" backgroundDesign="List">
+        <headerContent>
+            <Button text="Refresh" icon="sap-icon://refresh" press="onRefresh" type="Transparent" />
+        </headerContent>
+
+        <content>
+            <VBox class="sapUiMediumMarginBeginEnd sapUiSmallMarginTopBottom">
+
+                <!-- ── KPI Cards ─────────────────────────────────────────────── -->
+                <Title text="Key Performance Indicators" level="H4" class="sapUiSmallMarginBottom" />
+                <f:GridContainer id="kpiGrid" containerQuery="true" snapToRow="true" class="sapUiSmallMarginBottom">
+                    <f:layout>
+                        <f:GridContainerSettings rowSize="5rem" columnSize="5rem" gap="1rem" />
+                    </f:layout>
+
+                    <f:Card class="sapFCard">
+                        <f:layoutData><f:GridContainerItemLayoutData columns="3" rows="2" /></f:layoutData>
+                        <f:header>
+                            <card:NumericHeader title="Active Projects" subtitle="In Execution"
+                                number="{mgmt>/kpis/activeProjects}" scale=""
+                                state="{mgmt>/kpis/projectState}" details="{mgmt>/kpis/projectDetails}" />
+                        </f:header>
+                    </f:Card>
+
+                    <f:Card class="sapFCard">
+                        <f:layoutData><f:GridContainerItemLayoutData columns="3" rows="2" /></f:layoutData>
+                        <f:header>
+                            <card:NumericHeader title="Total PO Spend" subtitle="Confirmed Orders"
+                                number="{mgmt>/kpis/totalPOValue}" scale="Cr INR"
+                                state="{mgmt>/kpis/poState}" details="{mgmt>/kpis/poDetails}" />
+                        </f:header>
+                    </f:Card>
+
+                    <f:Card class="sapFCard">
+                        <f:layoutData><f:GridContainerItemLayoutData columns="3" rows="2" /></f:layoutData>
+                        <f:header>
+                            <card:NumericHeader title="On-Time Delivery" subtitle="Vendor OTD Rate"
+                                number="{mgmt>/kpis/otdPct}" scale="%"
+                                state="{mgmt>/kpis/otdState}" details="{mgmt>/kpis/otdDetails}" />
+                        </f:header>
+                    </f:Card>
+
+                    <f:Card class="sapFCard">
+                        <f:layoutData><f:GridContainerItemLayoutData columns="3" rows="2" /></f:layoutData>
+                        <f:header>
+                            <card:NumericHeader title="Invoice Clearance" subtitle="Matched &amp; Paid"
+                                number="{mgmt>/kpis/invoiceClearance}" scale="%"
+                                state="{mgmt>/kpis/invoiceState}" details="{mgmt>/kpis/invoiceDetails}" />
+                        </f:header>
+                    </f:Card>
+
+                    <f:Card class="sapFCard">
+                        <f:layoutData><f:GridContainerItemLayoutData columns="3" rows="2" /></f:layoutData>
+                        <f:header>
+                            <card:NumericHeader title="Budget Utilization" subtitle="Enterprise-wide"
+                                number="{mgmt>/kpis/budgetUtilization}" scale="%"
+                                state="{mgmt>/kpis/budgetState}" details="{mgmt>/kpis/budgetDetails}" />
+                        </f:header>
+                    </f:Card>
+
+                    <f:Card class="sapFCard">
+                        <f:layoutData><f:GridContainerItemLayoutData columns="3" rows="2" /></f:layoutData>
+                        <f:header>
+                            <card:NumericHeader title="Rejection Rate" subtitle="Material Quality"
+                                number="{mgmt>/kpis/rejectionRate}" scale="%"
+                                state="{mgmt>/kpis/rejectionState}" details="{mgmt>/kpis/rejectionDetails}" />
+                        </f:header>
+                    </f:Card>
+                </f:GridContainer>
+
+                <!-- ── Active Projects Table ─────────────────────────────────── -->
+                <Title text="Active Projects — Budget Overview" level="H4" class="sapUiSmallMarginBottom sapUiSmallMarginTop" />
+                <Table id="projectsTable" items="{mgmt>/projects}" backgroundDesign="Solid"
+                       class="sapUiSmallMarginBottom" growing="true" growingThreshold="5"
+                       noDataText="Loading project data...">
+                    <columns>
+                        <Column><Text text="Project Code" /></Column>
+                        <Column><Text text="Project Name" /></Column>
+                        <Column><Text text="Status" /></Column>
+                        <Column hAlign="End"><Text text="Budget (INR)" /></Column>
+                        <Column hAlign="End"><Text text="Spent (INR)" /></Column>
+                        <Column hAlign="End"><Text text="Utilized %" /></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{mgmt>projectCode}" />
+                                <Text text="{mgmt>projectName}" />
+                                <ObjectStatus text="{mgmt>status}" state="{mgmt>statusState}" />
+                                <ObjectNumber number="{mgmt>budget}" unit="INR" />
+                                <ObjectNumber number="{mgmt>spentAmount}" unit="INR" />
+                                <ObjectStatus text="{mgmt>budgetUtilizationPct} %" state="{mgmt>budgetState}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+
+                <!-- ── Vendor Leaderboard ────────────────────────────────────── -->
+                <Title text="Vendor Performance Leaderboard" level="H4" class="sapUiSmallMarginBottom sapUiSmallMarginTop" />
+                <Table id="vendorTable" items="{mgmt>/vendors}" backgroundDesign="Solid"
+                       class="sapUiSmallMarginBottom" growing="true" growingThreshold="5"
+                       noDataText="Loading vendor data...">
+                    <columns>
+                        <Column><Text text="Vendor" /></Column>
+                        <Column hAlign="Center"><Text text="Total Orders" /></Column>
+                        <Column hAlign="Center"><Text text="OTD %" /></Column>
+                        <Column hAlign="Center"><Text text="Quality" /></Column>
+                        <Column hAlign="Center"><Text text="Overall Score" /></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <ObjectIdentifier title="{mgmt>vendorName}" text="{mgmt>vendorCode}" />
+                                <Text text="{mgmt>totalOrders}" />
+                                <ObjectStatus text="{mgmt>onTimeDeliveryPct} %" state="{mgmt>otdState}" />
+                                <ObjectStatus text="{mgmt>qualityScore} / 10" state="{mgmt>qualityState}" />
+                                <ObjectStatus text="{mgmt>performanceScore} / 10" state="{mgmt>scoreState}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+
+                <!-- ── Procurement KPI By Project ────────────────────────────── -->
+                <Title text="Procurement Summary — By Project" level="H4" class="sapUiSmallMarginBottom sapUiSmallMarginTop" />
+                <Table id="procTable" items="{mgmt>/procurementKPIs}" backgroundDesign="Solid"
+                       growing="true" growingThreshold="5"
+                       noDataText="Loading procurement data...">
+                    <columns>
+                        <Column><Text text="Project" /></Column>
+                        <Column hAlign="Center"><Text text="Total POs" /></Column>
+                        <Column hAlign="Center"><Text text="Confirmed" /></Column>
+                        <Column hAlign="Center"><Text text="Delivered" /></Column>
+                        <Column hAlign="End"><Text text="Total PO Value (INR)" /></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <ObjectIdentifier title="{mgmt>projectName}" text="{mgmt>projectCode}" />
+                                <Text text="{mgmt>totalPOs}" />
+                                <Text text="{mgmt>confirmedPOs}" />
+                                <Text text="{mgmt>deliveredPOs}" />
+                                <ObjectNumber number="{mgmt>totalPOValue}" unit="INR" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mvc:View
+    controllerName="solar.epc.projectmanagement.dashboard.ManagementDashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    xmlns:cssgrid="sap.ui.layout.cssgrid"
+    xmlns:core="sap.ui.core"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:vizData="sap.viz.ui5.data"
+    xmlns:vizFeeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    displayBlock="true">
+
+    <html:style>
+        :root {
+            --primary-dark: #0d1f35;
+            --primary-green: #27c88a;
+            --primary-green-deep: #1a5c4e;
+            --page-bg: #eef3f8;
+            --surface: #ffffff;
+            --surface-soft: #f8fbfd;
+            --text-main: #12243a;
+            --text-soft: #617285;
+            --text-muted: rgba(255, 255, 255, 0.4);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-light: rgba(18, 36, 58, 0.08);
+            --shadow-soft: 0 20px 40px rgba(13, 31, 53, 0.08);
+            --shadow-card: 0 12px 28px rgba(18, 36, 58, 0.08);
+        }
+
+        .managementDashboardPage {
+            background:
+                radial-gradient(circle at top right, rgba(39, 200, 138, 0.08), transparent 20%),
+                linear-gradient(180deg, #f6f9fc 0%, var(--page-bg) 40%, #ebf1f7 100%);
+        }
+
+        .dashboardContent {
+            gap: 1rem;
+        }
+
+        .executiveHero {
+            background: var(--primary-dark);
+            border-radius: 1.4rem;
+            padding: 1.1rem 1.3rem;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .executiveHero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(39, 200, 138, 0.22), transparent 24%),
+                radial-gradient(circle at 84% 16%, rgba(255, 255, 255, 0.08), transparent 18%);
+            pointer-events: none;
+        }
+
+        .executiveHero > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .heroTitle {
+            color: #ffffff !important;
+        }
+
+        .heroSubtitle {
+            color: var(--text-muted) !important;
+        }
+
+        .heroPill {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-subtle);
+            border-radius: 999px;
+            padding: 0.4rem 0.7rem;
+        }
+
+        .heroPill .sapMText,
+        .heroPill .sapUiIcon {
+            color: #ffffff !important;
+        }
+
+        .heroLive {
+            background: rgba(39, 200, 138, 0.14);
+            border: 1px solid rgba(39, 200, 138, 0.3);
+        }
+
+        .heroLive .sapMText,
+        .heroLive .sapUiIcon {
+            color: var(--primary-green) !important;
+            font-weight: 700;
+        }
+
+        .heroActions .sapMBtnTransparent .sapMBtnIcon,
+        .heroActions .sapMBtnTransparent .sapMBtnContent {
+            color: #ffffff !important;
+        }
+
+        .heroActions .sapMBtnEmphasized {
+            background: #ff7a00 !important;
+            border-color: #ff7a00 !important;
+        }
+
+        .dashboardTopBar {
+            padding: 0 1.5rem;
+            background: var(--primary-dark);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            height: 3.25rem;
+        }
+
+        .dashboardTopBar.sapMTB,
+        .dashboardTopBar .sapMBar,
+        .dashboardTopBar .sapMIBar {
+            background: var(--primary-dark) !important;
+            border: 0 !important;
+        }
+
+        .dashboardTopBarSep {
+            width: 1px;
+            height: 1.6rem;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .dashboardTopBarIconShell {
+            width: 1.9rem;
+            height: 1.9rem;
+            border-radius: 0.45rem;
+            background: var(--primary-green-deep);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dashboardTopBarTitle {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            font-size: 0.84rem !important;
+        }
+
+        .dashboardTopBarSub {
+            color: var(--text-muted) !important;
+            font-size: 0.69rem !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .dashboardBackBtn .sapMBtnInner {
+            border-radius: 0.375rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: transparent !important;
+            color: rgba(255,255,255,0.7) !important;
+            font-weight: 500;
+            padding: 0 0.35rem !important;
+            min-height: 2rem !important;
+        }
+
+        .dashboardBackBtn .sapMBtnInner .sapMBtnIcon,
+        .dashboardBackBtn .sapMBtnInner .sapMBtnContent,
+        .dashboardTopBar .sapMBtnTransparent .sapMBtnIcon,
+        .dashboardTopBar .sapMBtnTransparent .sapMBtnContent {
+            color: rgba(255,255,255,0.88) !important;
+        }
+
+        .dashboardBackBtn .sapMBtnInner:hover {
+            background: rgba(255,255,255,0.08) !important;
+            border-color: rgba(255,255,255,0.4) !important;
+        }
+
+        .dashboardTopBar .sapMBtn:hover .sapMBtnIcon,
+        .dashboardTopBar .sapMBtn:hover .sapMBtnContent {
+            color: #ffffff !important;
+        }
+
+        .dashboardLiveBadge {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.2rem 0.55rem;
+            border: 1px solid rgba(39,200,138,0.28);
+            border-radius: 0.625rem;
+        }
+
+        .dashboardLiveBadge .sapMText,
+        .dashboardLiveBadge .sapUiIcon {
+            color: #5de8b0 !important;
+            font-size: 0.68rem !important;
+            font-weight: 600 !important;
+        }
+
+        .sectionPanel {
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 1.25rem;
+            padding: 1rem;
+            box-shadow: var(--shadow-card);
+        }
+
+        .sectionTitle {
+            color: var(--text-main) !important;
+        }
+
+        .sectionText {
+            color: var(--text-soft) !important;
+        }
+
+        .kpiTile {
+            border-radius: 1.15rem !important;
+            border: none !important;
+            box-shadow: 0 14px 28px rgba(18, 36, 58, 0.12) !important;
+            overflow: hidden;
+            min-height: 10rem;
+        }
+
+        .kpiTileBlue   { background: linear-gradient(135deg, #0f69d8, #0a4ea7) !important; }
+        .kpiTileGreen  { background: linear-gradient(135deg, #1f9d6a, #166b48) !important; }
+        .kpiTileOrange { background: linear-gradient(135deg, #f28516, #d86808) !important; }
+        .kpiTileRed    { background: linear-gradient(135deg, #d32030, #991b1b) !important; }
+        .kpiTilePurple { background: linear-gradient(135deg, #7d3aed, #5b21b6) !important; }
+
+        .kpiTile * {
+            color: #ffffff !important;
+            text-shadow: none !important;
+        }
+
+        .analyticsCard,
+        .tableCard {
+            border-radius: 1.2rem !important;
+            border: 1px solid var(--border-light) !important;
+            box-shadow: var(--shadow-card) !important;
+            background: var(--surface) !important;
+        }
+
+        .analyticsCard .sapFCardContent,
+        .tableCard .sapFCardContent {
+            padding: 0.9rem 1rem 1rem !important;
+        }
+
+        .analyticsCard .sapFCardHeader,
+        .tableCard .sapFCardHeader {
+            background: linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%) !important;
+            border-bottom: 1px solid rgba(18, 36, 58, 0.06);
+            padding: 0.85rem 1rem !important;
+        }
+
+        .analyticsCard .sapFCardHeader .sapMTitle,
+        .tableCard .sapFCardHeader .sapMTitle {
+            color: var(--text-main) !important;
+        }
+
+        .analyticsCard .sapFCardHeader .sapMText,
+        .tableCard .sapFCardHeader .sapMText,
+        .analyticsCard .sapFCardStatus,
+        .tableCard .sapFCardStatus {
+            color: var(--text-soft) !important;
+        }
+
+        .alertList .sapMLIB {
+            margin: 0.35rem 0.6rem;
+            border-radius: 0.95rem;
+            border: 1px solid rgba(18, 36, 58, 0.08);
+            background: var(--surface-soft);
+        }
+
+        .tableCard .sapMListTblHeaderCell,
+        .tableCard .sapMColumnHeader {
+            background: #f7fbfd !important;
+        }
+
+        .tableCard .sapMColumnHeader .sapMText,
+        .tableCard th .sapMText {
+            color: var(--text-main) !important;
+            font-weight: 700 !important;
+        }
+
+        .tableCard .sapMListTblRow,
+        .tableCard .sapMListItems > .sapMLIB {
+            background: #ffffff;
+        }
+
+        .tableCard .sapMListTblRow:nth-child(even),
+        .tableCard .sapMListItems > .sapMLIB:nth-child(even) {
+            background: #fbfdff;
+        }
+
+        .tableCard .sapMListTblCell,
+        .tableCard .sapMListTblHeaderCell {
+            padding-top: 0.8rem !important;
+            padding-bottom: 0.8rem !important;
+        }
+
+        .resizableCard {
+            min-height: 24rem;
+            resize: vertical;
+            overflow: auto;
+        }
+
+        .resizableTall {
+            min-height: 28rem;
+        }
+
+        .dashboardFooter {
+            background: linear-gradient(180deg, rgba(13, 31, 53, 0.96), rgba(9, 21, 36, 1));
+            border-radius: 1.2rem;
+            padding: 0.95rem 1.15rem;
+            box-shadow: var(--shadow-card);
+        }
+
+        .dashboardFooter .sapMTitle {
+            color: #ffffff !important;
+        }
+
+        .dashboardFooter .sapMText {
+            color: var(--text-muted) !important;
+        }
+    </html:style>
+
+    <Page id="managementDashboardPage" showHeader="false" class="managementDashboardPage">
+        <subHeader>
+            <Toolbar class="dashboardTopBar">
+                <Button text="Back to Home" icon="sap-icon://nav-back" press="onNavHome" type="Transparent" class="dashboardBackBtn" />
+                <ToolbarSeparator class="dashboardTopBarSep" />
+                <HBox alignItems="Center" class="sapUiTinyMarginEnd">
+                    <HBox alignItems="Center" justifyContent="Center" class="dashboardTopBarIconShell sapUiTinyMarginEnd">
+                        <core:Icon src="sap-icon://business-objects-experience" color="#ffffff" size="0.95rem" />
+                    </HBox>
+                    <VBox>
+                        <Title text="Management Overview" level="H6" class="dashboardTopBarTitle" />
+                        <Text text="SolarSage EPC · Executive dashboard" class="dashboardTopBarSub" />
+                    </VBox>
+                </HBox>
+                <ToolbarSpacer />
+                <HBox alignItems="Center" class="dashboardLiveBadge">
+                    <core:Icon src="sap-icon://circle-task-2" size="0.55rem" />
+                    <Text text="LIVE" />
+                </HBox>
+            </Toolbar>
+        </subHeader>
+        <content>
+            <VBox class="dashboardContent sapUiMediumMarginBeginEnd sapUiMediumMarginTop sapUiMediumMarginBottom">
+
+                <HBox justifyContent="SpaceBetween" alignItems="Center" wrap="Wrap" class="executiveHero">
+                    <VBox class="sapUiTinyMarginBottom">
+                        <Text text="SOLARSAGE EPC" class="heroSubtitle sapUiTinyMarginBottom" />
+                        <Title text="Management Overview" level="H1" class="heroTitle sapUiTinyMarginBottom" />
+                        <Text text="Budget, procurement, GRN, vendor and invoice KPIs for executive review." class="heroSubtitle sapUiTinyMarginBottom" />
+                        <HBox wrap="Wrap" class="sapUiTinyMarginTop">
+                            <HBox alignItems="Center" class="heroPill sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                                <core:Icon src="sap-icon://history" size="0.75rem" class="sapUiTinyMarginEnd" />
+                                <Text text="Last refreshed: {dashboard>/lastRefreshed}" />
+                            </HBox>
+                            <HBox alignItems="Center" class="heroPill sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                                <core:Icon src="sap-icon://status-positive" size="0.75rem" class="sapUiTinyMarginEnd" />
+                                <Text text="{dashboard>/systemStatus}" />
+                            </HBox>
+                            <HBox alignItems="Center" class="heroPill heroLive sapUiTinyMarginBottom">
+                                <core:Icon src="sap-icon://circle-task-2" size="0.6rem" class="sapUiTinyMarginEnd" />
+                                <Text text="LIVE" />
+                            </HBox>
+                        </HBox>
+                    </VBox>
+
+                    <HBox alignItems="Center" wrap="Wrap" class="heroActions sapUiTinyMarginTop">
+                        <Button text="Refresh" icon="sap-icon://refresh" press="onRefresh" type="Transparent" class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+                        <Button text="Back to Home" icon="sap-icon://home" press="onNavHome" type="Emphasized" class="sapUiTinyMarginBottom" />
+                    </HBox>
+                </HBox>
+
+                <VBox class="sectionPanel">
+                    <HBox justifyContent="SpaceBetween" alignItems="Center" wrap="Wrap" class="sapUiSmallMarginBottom">
+                        <VBox>
+                            <Title text="Executive KPIs" level="H3" class="sectionTitle sapUiTinyMarginBottom" />
+                            <Text text="A compact view of delivery, budget, procurement and finance health." class="sectionText" />
+                        </VBox>
+                        <ObjectStatus text="{dashboard>/systemStatus}" state="{dashboard>/systemState}" inverted="true" class="sapUiTinyMarginTop" />
+                    </HBox>
+
+                    <cssgrid:CSSGrid
+                        gridTemplateColumns="repeat(auto-fit, minmax(240px, 1fr))"
+                        gridAutoRows="10rem"
+                        gridGap="1rem">
+
+                        <GenericTile id="kpiOngoing" class="kpiTile kpiTileBlue" header="Ongoing Projects" subheader="Currently active">
+                            <TileContent unit="Projects">
+                                <NumericContent value="{dashboard>/kpi/ongoingProjects}" truncateValueTo="4" indicator="None" withMargin="false" />
+                            </TileContent>
+                        </GenericTile>
+
+                        <GenericTile id="kpiCompleted" class="kpiTile kpiTileGreen" header="Completed" subheader="Successfully delivered">
+                            <TileContent unit="Projects">
+                                <NumericContent value="{dashboard>/kpi/completedProjects}" truncateValueTo="4" indicator="Up" withMargin="false" />
+                            </TileContent>
+                        </GenericTile>
+
+                        <GenericTile id="kpiDelayed" class="kpiTile kpiTileRed" header="Delayed Projects" subheader="Behind schedule">
+                            <TileContent unit="Projects">
+                                <NumericContent value="{dashboard>/kpi/delayedProjects}" truncateValueTo="4" indicator="Down" withMargin="false" />
+                            </TileContent>
+                        </GenericTile>
+
+                        <GenericTile id="kpiPOValue" class="kpiTile kpiTileOrange" header="Total PO Value" subheader="Year to date">
+                            <TileContent unit="Cr">
+                                <NumericContent value="{dashboard>/kpi/totalPOValueCr}" scale="Cr" truncateValueTo="5" withMargin="false" />
+                            </TileContent>
+                        </GenericTile>
+
+                        <GenericTile id="kpiPendingInvoices" class="kpiTile kpiTilePurple" header="Pending Invoices" subheader="Awaiting approval">
+                            <TileContent unit="Invoices">
+                                <NumericContent value="{dashboard>/kpi/pendingInvoices}" truncateValueTo="4" indicator="Down" withMargin="false" />
+                            </TileContent>
+                        </GenericTile>
+                    </cssgrid:CSSGrid>
+                </VBox>
+
+                <VBox class="sectionPanel">
+                    <HBox justifyContent="SpaceBetween" alignItems="Center" wrap="Wrap" class="sapUiSmallMarginBottom">
+                        <VBox>
+                            <Title text="Operational Analytics" level="H3" class="sectionTitle sapUiTinyMarginBottom" />
+                            <Text text="Cross-functional comparisons for spend, vendor reliability and delivery variance." class="sectionText" />
+                        </VBox>
+                    </HBox>
+
+                    <cssgrid:CSSGrid
+                        gridTemplateColumns="repeat(auto-fit, minmax(380px, 1fr))"
+                        gridGap="1rem">
+
+                        <f:Card id="budgetCard" class="analyticsCard resizableCard">
+                            <f:header>
+                                <card:Header title="Budget vs Spent" subtitle="By project in INR lakhs" iconSrc="sap-icon://bar-chart" />
+                            </f:header>
+                            <f:content>
+                                <viz:VizFrame id="budgetChart" vizType="bar" height="300px" width="100%">
+                                    <viz:dataset>
+                                        <vizData:FlattenedDataset data="{dashboard>/budgetData}">
+                                            <vizData:dimensions>
+                                                <vizData:DimensionDefinition name="Project" value="{projectCode}" />
+                                            </vizData:dimensions>
+                                            <vizData:measures>
+                                                <vizData:MeasureDefinition name="Budget (L)" value="{budgetL}" />
+                                                <vizData:MeasureDefinition name="Spent (L)" value="{spentL}" />
+                                            </vizData:measures>
+                                        </vizData:FlattenedDataset>
+                                    </viz:dataset>
+                                    <viz:feeds>
+                                        <vizFeeds:FeedItem uid="primaryValues" type="Measure" values="Budget (L),Spent (L)" />
+                                        <vizFeeds:FeedItem uid="axisLabels" type="Dimension" values="Project" />
+                                    </viz:feeds>
+                                </viz:VizFrame>
+                            </f:content>
+                        </f:Card>
+
+                        <f:Card id="vendorCard" class="analyticsCard resizableCard">
+                            <f:header>
+                                <card:Header title="Vendor Performance" subtitle="On-time delivery and score" iconSrc="sap-icon://supplier" />
+                            </f:header>
+                            <f:content>
+                                <viz:VizFrame id="vendorChart" vizType="bar" height="300px" width="100%">
+                                    <viz:dataset>
+                                        <vizData:FlattenedDataset data="{dashboard>/vendorData}">
+                                            <vizData:dimensions>
+                                                <vizData:DimensionDefinition name="Vendor" value="{vendorName}" />
+                                            </vizData:dimensions>
+                                            <vizData:measures>
+                                                <vizData:MeasureDefinition name="OTD %" value="{onTimeDeliveryPct}" />
+                                                <vizData:MeasureDefinition name="Score" value="{performanceScore}" />
+                                            </vizData:measures>
+                                        </vizData:FlattenedDataset>
+                                    </viz:dataset>
+                                    <viz:feeds>
+                                        <vizFeeds:FeedItem uid="primaryValues" type="Measure" values="OTD %,Score" />
+                                        <vizFeeds:FeedItem uid="axisLabels" type="Dimension" values="Vendor" />
+                                    </viz:feeds>
+                                </viz:VizFrame>
+                            </f:content>
+                        </f:Card>
+
+                        <f:Card id="delayCard" class="analyticsCard resizableCard">
+                            <f:header>
+                                <card:Header title="Delivery Delays" subtitle="Average versus max delay days" iconSrc="sap-icon://shipping-status" />
+                            </f:header>
+                            <f:content>
+                                <viz:VizFrame id="delayChart" vizType="column" height="300px" width="100%">
+                                    <viz:dataset>
+                                        <vizData:FlattenedDataset data="{dashboard>/deliveryData}">
+                                            <vizData:dimensions>
+                                                <vizData:DimensionDefinition name="Vendor" value="{vendorName}" />
+                                            </vizData:dimensions>
+                                            <vizData:measures>
+                                                <vizData:MeasureDefinition name="Avg Delay" value="{avgDelayDays}" />
+                                                <vizData:MeasureDefinition name="Max Delay" value="{maxDelayDays}" />
+                                            </vizData:measures>
+                                        </vizData:FlattenedDataset>
+                                    </viz:dataset>
+                                    <viz:feeds>
+                                        <vizFeeds:FeedItem uid="primaryValues" type="Measure" values="Avg Delay,Max Delay" />
+                                        <vizFeeds:FeedItem uid="axisLabels" type="Dimension" values="Vendor" />
+                                    </viz:feeds>
+                                </viz:VizFrame>
+                            </f:content>
+                        </f:Card>
+                    </cssgrid:CSSGrid>
+                </VBox>
+
+                <cssgrid:CSSGrid
+                    gridTemplateColumns="repeat(auto-fit, minmax(360px, 1fr))"
+                    gridGap="1rem">
+
+                    <f:Card id="anomalyCard" class="tableCard resizableCard">
+                        <f:header>
+                            <card:Header
+                                title="Anomaly Detection"
+                                subtitle="Items requiring immediate management attention"
+                                statusText="{= ${dashboard>/anomalyCount} + ' Alert(s)'}"
+                                iconSrc="sap-icon://alert" />
+                        </f:header>
+                        <f:content>
+                            <List
+                                id="anomalyList"
+                                class="alertList"
+                                items="{dashboard>/anomalies}"
+                                noDataText="No anomalies detected. System health is stable."
+                                showSeparators="None">
+                                <StandardListItem
+                                    title="{dashboard>title}"
+                                    description="{dashboard>detail}"
+                                    icon="{dashboard>icon}"
+                                    iconInset="false"
+                                    info="{dashboard>category}"
+                                    infoState="{dashboard>infoState}"
+                                    type="Active"
+                                    press="onAnomalyPress" />
+                            </List>
+                        </f:content>
+                    </f:Card>
+
+                    <f:Card id="projectTableCard" class="tableCard resizableCard resizableTall">
+                        <f:header>
+                            <card:Header
+                                title="Project Status Summary"
+                                subtitle="Budget utilization and progress overview"
+                                iconSrc="sap-icon://project-definition-triangle" />
+                        </f:header>
+                        <f:content>
+                            <Table
+                                id="projectSummaryTable"
+                                items="{dashboard>/projects}"
+                                growing="true"
+                                growingThreshold="8"
+                                noDataText="No projects to display.">
+                                <columns>
+                                    <Column><Text text="Project" /></Column>
+                                    <Column minScreenWidth="Tablet"><Text text="Client" /></Column>
+                                    <Column><Text text="Status" /></Column>
+                                    <Column hAlign="End"><Text text="Budget (INR)" /></Column>
+                                    <Column hAlign="End"><Text text="Spent (INR)" /></Column>
+                                    <Column minScreenWidth="Desktop"><Text text="Utilization" /></Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem type="Navigation" press="onProjectRowPress">
+                                        <Text text="{dashboard>projectName}" />
+                                        <Text text="{dashboard>clientName}" />
+                                        <ObjectStatus text="{dashboard>status}" state="{dashboard>statusState}" />
+                                        <ObjectNumber number="{path: 'dashboard>budget', type: 'sap.ui.model.type.Float', formatOptions: {groupingEnabled: true, maxFractionDigits: 0}}" unit="INR" />
+                                        <ObjectNumber number="{path: 'dashboard>spentAmount', type: 'sap.ui.model.type.Float', formatOptions: {groupingEnabled: true, maxFractionDigits: 0}}" unit="INR" />
+                                        <ProgressIndicator percentValue="{dashboard>budgetUtilizationPct}" displayValue="{dashboard>budgetUtilizationPct}%" showValue="false" state="{dashboard>budgetState}" height="0.85rem" />
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </f:content>
+                    </f:Card>
+                </cssgrid:CSSGrid>
+
+                <f:Card id="invoiceCard" class="tableCard resizableCard">
+                    <f:header>
+                        <card:Header
+                            title="Invoice Matching Summary"
+                            subtitle="3-way match results by vendor"
+                            iconSrc="sap-icon://my-sales-order" />
+                    </f:header>
+                    <f:content>
+                        <Table
+                            id="invoiceSummaryTable"
+                            items="{dashboard>/invoiceSummary}"
+                            growing="true"
+                            growingThreshold="5"
+                            noDataText="No invoice data available.">
+                            <columns>
+                                <Column><Text text="Vendor" /></Column>
+                                <Column hAlign="End"><Text text="Total" /></Column>
+                                <Column hAlign="End"><Text text="Matched" /></Column>
+                                <Column hAlign="End"><Text text="Mismatch" /></Column>
+                                <Column hAlign="End"><Text text="Paid" /></Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <Text text="{dashboard>vendorName}" />
+                                    <ObjectNumber number="{dashboard>totalInvoices}" />
+                                    <ObjectNumber number="{dashboard>matched}" state="Success" />
+                                    <ObjectNumber number="{dashboard>mismatched}" state="Error" />
+                                    <ObjectNumber number="{dashboard>paid}" state="Success" />
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </f:content>
+                </f:Card>
+
+                <HBox justifyContent="SpaceBetween" alignItems="Center" wrap="Wrap" class="dashboardFooter">
+                    <VBox class="sapUiTinyMarginBottom">
+                        <Title text="SolarSage EPC" level="H4" class="sapUiTinyMarginBottom" />
+                        <Text text="Executive control surface for operational, procurement, GRN and finance insights." />
+                    </VBox>
+                    <Text text="Management role dashboard | aligned to SolarSage design guidance" class="sapUiTinyMarginBottom" />
+                </HBox>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

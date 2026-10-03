@@ -1,0 +1,84 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.f">
+    <Popover
+        title="Developer Mode: Switch User"
+        class="sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer"
+        placement="Bottom">
+        <List
+            id="devUserList"
+            mode="SingleSelectMaster"
+            selectionChange=".onSelectUser">
+            <StandardListItem
+                title="Arjun Reddy (BDM)"
+                description="User: bdm1 | Pass: pass"
+                icon="sap-icon://customer"
+                customData="{
+                    Type: 'sap.ui.core.CustomData',
+                    key: 'userId',
+                    value: 'bdm1'
+                }" />
+            <StandardListItem
+                title="Rajesh Kumar (Engineer)"
+                description="User: engineer1 | Pass: pass"
+                icon="sap-icon://customer"
+                customData="{
+                    Type: 'sap.ui.core.CustomData',
+                    key: 'userId',
+                    value: 'engineer1'
+                }" />
+            <StandardListItem
+                title="Priya Sharma (Project Manager)"
+                description="User: pm1 | Pass: pass"
+                icon="sap-icon://customer"
+                customData="{
+                    Type: 'sap.ui.core.CustomData',
+                    key: 'userId',
+                    value: 'pm1'
+                }" />
+            <StandardListItem
+                title="Amit Patel (Procurement)"
+                description="User: proc1 | Pass: pass"
+                icon="sap-icon://customer"
+                customData="{
+                    Type: 'sap.ui.core.CustomData',
+                    key: 'userId',
+                    value: 'proc1'
+                }" />
+            <StandardListItem
+                title="Suresh Singh (Site Engineer)"
+                description="User: site1 | Pass: pass"
+                icon="sap-icon://customer"
+                customData="{
+                    Type: 'sap.ui.core.CustomData',
+                    key: 'userId',
+                    value: 'site1'
+                }" />
+            <StandardListItem
+                title="Meena Iyer (Finance)"
+                description="User: finance1 | Pass: pass"
+                icon="sap-icon://customer"
+                customData="{
+                    Type: 'sap.ui.core.CustomData',
+                    key: 'userId',
+                    value: 'finance1'
+                }" />
+            <StandardListItem
+                title="Vikram Mehta (Management)"
+                description="User: mgmt1 | Pass: pass"
+                icon="sap-icon://customer"
+                customData="{
+                    Type: 'sap.ui.core.CustomData',
+                    key: 'userId',
+                    value: 'mgmt1'
+                }" />
+            <StandardListItem
+                title="System Admin"
+                description="User: admin | Pass: admin"
+                icon="sap-icon://shield"
+                customData="{
+                    Type: 'sap.ui.core.CustomData',
+                    key: 'userId',
+                    value: 'admin'
+                }" />
+        </List>
+    </Popover>
+</core:FragmentDefinition>

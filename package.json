@@ -1,0 +1,50 @@
+{
+  "name": "maha_project",
+  "version": "1.0.0",
+  "dependencies": {
+    "@sap/cds": "^9",
+    "@sap/xssec": "^4",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^2",
+    "@sap/cds-dk": "^9",
+    "cds-plugin-ui5": "^0.13.0"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "dev": "cds watch",
+    "build": "cds build",
+    "deploy": "cds deploy --to sqlite:solar_epc.db",
+    "watch-projectmanagement": "cds watch --open solar.epc.projectmanagement/index.html?sap-ui-xx-viewCache=false --livereload false"
+  },
+  "cds": {
+    "fiori": {
+      "bypass_draft": true
+    },
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "database": "solar_epc.db"
+        }
+      },
+      "[production]": {
+        "auth": {
+          "kind": "xsuaa",
+          "users": {}
+        }
+      }
+    },
+    "features": {
+      "draft_compat": true
+    }
+  },
+  "private": true,
+  "workspaces": [
+    "app/*"
+  ],
+  "sapux": [
+    "app/projectmanagement"
+  ]
+}

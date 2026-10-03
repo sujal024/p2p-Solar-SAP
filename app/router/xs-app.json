@@ -1,0 +1,32 @@
+{
+  "routes": [
+    {
+      "source": "^/sap/opu/odata/sap/ZSOLAR_DELIVERY_SRV/(.*)$",
+      "target": "/sap/opu/odata/sap/ZSOLAR_DELIVERY_SRV/$1",
+      "destination": "SOLAR_EPC_SEGW",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true
+    },
+    {
+      "source": "^/sap/opu/odata/sap/VENDOR_SRV/(.*)$",
+      "target": "/sap/opu/odata/sap/VENDOR_SRV/$1",
+      "destination": "SOLAR_EPC_SEGW",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true
+    },
+    {
+      "source": "^/sap/opu/odata4/sap/zrap_material_receipt/(.*)$",
+      "target": "/sap/opu/odata4/sap/zrap_material_receipt/$1",
+      "destination": "SOLAR_EPC_RAP",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "$1",
+      "destination": "srv-api",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true
+    }
+  ]
+}

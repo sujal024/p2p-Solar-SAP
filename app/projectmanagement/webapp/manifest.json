@@ -1,0 +1,1180 @@
+{
+  "_version": "1.83.0",
+  "sap.app": {
+    "id": "solar.epc.projectmanagement",
+    "type": "application",
+    "i18n": {
+      "bundleUrl": "i18n/i18n.properties",
+      "supportedLocales": [
+        "en",
+        ""
+      ],
+      "fallbackLocale": ""
+    },
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.22.0",
+      "toolsId": "5950fd3f-09a7-43fc-b949-a55b808bdf14"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/project/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.01"
+        }
+      },
+      "vendorService": {
+        "uri": "/vendor/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.01"
+        }
+      },
+      "invoiceService": {
+        "uri": "/invoice/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.01"
+        }
+      },
+      "procurementService": {
+        "uri": "/procurement/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.01"
+        }
+      },
+      "dashboardService": {
+        "uri": "/dashboard/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.01"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.147.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {},
+        "sap.viz": {},
+        "sap.ui.comp": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "solar.epc.projectmanagement.i18n.i18n",
+          "supportedLocales": [
+            "en",
+            ""
+          ],
+          "fallbackLocale": ""
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "vendorService": {
+        "dataSource": "vendorService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "invoiceService": {
+        "dataSource": "invoiceService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "procurementService": {
+        "dataSource": "procurementService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "dashboardService": {
+        "dataSource": "dashboardService",
+        "preload": false,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": false
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "login/LoginPage.css"
+        },
+        {
+          "uri": "home/HomePage.css"
+        },
+        {
+          "uri": "App.css"
+        },
+        {
+          "uri": "vendor/QuotationComparison.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": "",
+          "name": "LoginPage",
+          "target": "LoginPage"
+        },
+        {
+          "pattern": "home",
+          "name": "HomePage",
+          "target": "HomePage"
+        },
+        {
+          "pattern": "management-dashboard",
+          "name": "ManagementDashboard",
+          "target": "ManagementDashboard"
+        },
+        {
+          "pattern": "GRNReceiptAnalytics:?query:",
+          "name": "GRNAnalytics",
+          "target": "GRNAnalytics"
+        },
+        {
+          "pattern": "Projects:?query:",
+          "name": "ProjectsList",
+          "target": "ProjectsList"
+        },
+        {
+          "pattern": "Projects({key}):?query:",
+          "name": "ProjectsObjectPage",
+          "target": "ProjectsObjectPage"
+        },
+        {
+          "pattern": "ActiveProjects:?query:",
+          "name": "EngineeringProjectsList",
+          "target": "EngineeringProjectsList"
+        },
+        {
+          "pattern": "ActiveProjects({key}):?query:",
+          "name": "EngineerObjectPage",
+          "target": "EngineerObjectPage"
+        },
+        {
+          "pattern": "SeniorActiveProjects:?query:",
+          "name": "SeniorProjectsList",
+          "target": "SeniorProjectsList"
+        },
+        {
+          "pattern": "SeniorActiveProjects({key}):?query:",
+          "name": "SeniorObjectPage",
+          "target": "SeniorObjectPage"
+        },
+        {
+          "pattern": "VendorMaster:?query:",
+          "name": "VendorList",
+          "target": "VendorList"
+        },
+        {
+          "pattern": "VendorMaster({key}):?query:",
+          "name": "VendorObjectPage",
+          "target": "VendorObjectPage"
+        },
+        {
+          "pattern": "CompareQuotations",
+          "name": "QuotationComparison",
+          "target": "QuotationComparison"
+        },
+        {
+          "pattern": "Invoices:?query:",
+          "name": "InvoiceList",
+          "target": "InvoiceList"
+        },
+        {
+          "pattern": "Invoices({key}):?query:",
+          "name": "InvoiceObjectPage",
+          "target": "InvoiceObjectPage"
+        },
+        {
+          "pattern": "ApprovedMaterialRequests:?query:",
+          "name": "ProcurementMRList",
+          "target": "ProcurementMRList"
+        },
+        {
+          "pattern": "ApprovedMaterialRequests({key}):?query:",
+          "name": "ProcurementMRDetail",
+          "target": "ProcurementMRDetail"
+        },
+        {
+          "pattern": "GRNReceipts:?query:",
+          "name": "GRNList",
+          "target": "GRNList"
+        },
+        {
+          "pattern": "GRNReceipts({key}):?query:",
+          "name": "GRNObjectPage",
+          "target": "GRNObjectPage"
+        },
+        {
+          "pattern": "Deliveries:?query:",
+          "name": "DeliveryList",
+          "target": "DeliveryList"
+        },
+        {
+          "pattern": "Deliveries({key}):?query:",
+          "name": "DeliveryObjectPage",
+          "target": "DeliveryObjectPage"
+        },
+        {
+          "pattern": "PurchaseOrders:?query:",
+          "name": "POList",
+          "target": "POList"
+        },
+        {
+          "pattern": "PurchaseOrders({key}):?query:",
+          "name": "POObjectPage",
+          "target": "POObjectPage"
+        },
+        {
+          "pattern": "MaterialRequests:?query:",
+          "name": "MRApprovalDashboard",
+          "target": "MRApprovalDashboard"
+        },
+        {
+          "pattern": "MaterialRequests({key}):?query:",
+          "name": "MRApprovalDetail",
+          "target": "MRApprovalDetail"
+        },
+        {
+          "pattern": "ActiveProjects({key})/materialRequests({mrKey}):?query:",
+          "name": "EngineerMRObjectPage",
+          "target": "EngineerMRObjectPage"
+        },
+        {
+          "pattern": "SeniorActiveProjects({key})/materialRequests({mrKey}):?query:",
+          "name": "SeniorMRObjectPage",
+          "target": "SeniorMRObjectPage"
+        }
+      ],
+      "targets": {
+        "ProjectsList": {
+          "type": "Component",
+          "id": "ProjectsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Projects",
+              "variantManagement": "Page",
+              "navigation": {
+                "Projects": {
+                  "detail": {
+                    "route": "ProjectsObjectPage"
+                  }
+                }
+              },
+              "initialLoad": true,
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "GridTable",
+                    "selectionMode": "Single",
+                    "enableExport": true,
+                    "condensedTableLayout": false,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true,
+                      "group": true
+                    }
+                  },
+                  "columns": {
+                    "DataField::status": {
+                      "importance": "High",
+                      "width": "140px"
+                    },
+                    "DataField::projectCode": {
+                      "importance": "High",
+                      "width": "160px"
+                    },
+                    "DataField::budget": {
+                      "importance": "High",
+                      "width": "160px"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ProjectsObjectPage": {
+          "type": "Component",
+          "id": "ProjectsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": true,
+              "contextPath": "/Projects",
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.Identification": {
+                  "actions": {
+                    "DataFieldForAction::ProjectService.putOnHold": {
+                      "visible": false
+                    }
+                  }
+                },
+                "@com.sap.vocabularies.UI.v1.Facets": {
+                  "sections": {
+                    "BOQSection": {
+                      "visible": false
+                    },
+                    "MRSection": {
+                      "visible": false
+                    }
+                  }
+                }
+              },
+              "sectionLayout": "Tabs"
+            }
+          }
+        },
+        "EngineeringProjectsList": {
+          "type": "Component",
+          "id": "EngineeringProjectsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/ActiveProjects",
+              "variantManagement": "Page",
+              "navigation": {
+                "ActiveProjects": {
+                  "detail": {
+                    "route": "EngineerObjectPage"
+                  }
+                }
+              },
+              "initialLoad": true,
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Single",
+                    "enableExport": true,
+                    "condensedTableLayout": false,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "EngineerObjectPage": {
+          "type": "Component",
+          "id": "EngineerObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/ActiveProjects",
+              "navigation": {
+                "materialRequests": {
+                  "detail": {
+                    "route": "EngineerMRObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.Identification": {
+                  "actions": {
+                    "DataFieldForAction::ProjectService.activateProject": {
+                      "visible": false
+                    },
+                    "DataFieldForAction::ProjectService.putOnHold": {
+                      "visible": false
+                    },
+                    "DataFieldForAction::ProjectService.completeProject": {
+                      "visible": false
+                    },
+                    "DataFieldForAction::ProjectService.cancelProject": {
+                      "visible": false
+                    }
+                  }
+                },
+                "boqItems/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "creationMode": {
+                      "name": "Inline"
+                    },
+                    "selectionMode": "Multi",
+                    "enableExport": true,
+                    "condensedTableLayout": false,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true,
+                      "group": true
+                    }
+                  }
+                },
+                "materialRequests/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "enableExport": true,
+                    "selectionMode": "Multi",
+                    "condensedTableLayout": false,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true,
+                      "group": true
+                    }
+                  },
+                  "actions": {
+                    "DataFieldForAction::ProjectService.approveRequest": {
+                      "visible": false
+                    },
+                    "DataFieldForAction::ProjectService.rejectRequest": {
+                      "visible": false
+                    },
+                    "DataFieldForAction::ProjectService.closeRequest": {
+                      "visible": false
+                    }
+                  }
+                }
+              },
+              "sectionLayout": "Tabs"
+            }
+          }
+        },
+        "SeniorProjectsList": {
+          "type": "Component",
+          "id": "SeniorProjectsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/SeniorActiveProjects",
+              "variantManagement": "Page",
+              "navigation": {
+                "SeniorActiveProjects": {
+                  "detail": {
+                    "route": "SeniorObjectPage"
+                  }
+                }
+              },
+              "initialLoad": true,
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Single",
+                    "enableExport": true,
+                    "condensedTableLayout": false,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "SeniorObjectPage": {
+          "type": "Component",
+          "id": "SeniorObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/SeniorActiveProjects",
+              "navigation": {
+                "materialRequests": {
+                  "detail": {
+                    "route": "SeniorMRObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.Identification": {
+                  "actions": {
+                    "DataFieldForAction::ProjectService.activateProject": {
+                      "visible": false
+                    },
+                    "DataFieldForAction::ProjectService.putOnHold": {
+                      "visible": false
+                    },
+                    "DataFieldForAction::ProjectService.completeProject": {
+                      "visible": false
+                    },
+                    "DataFieldForAction::ProjectService.cancelProject": {
+                      "visible": false
+                    }
+                  }
+                },
+                "boqItems/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "GridTable",
+                    "selectionMode": "Multi",
+                    "enableExport": true,
+                    "condensedTableLayout": false,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true,
+                      "group": true
+                    }
+                  },
+                  "actions": {
+                    "StandardAction::Create": {
+                      "visible": false
+                    },
+                    "StandardAction::Delete": {
+                      "visible": false
+                    }
+                  }
+                },
+                "materialRequests/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "enableExport": true,
+                    "selectionMode": "Multi",
+                    "condensedTableLayout": false,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true,
+                      "group": true
+                    }
+                  },
+                  "actions": {
+                    "StandardAction::Create": {
+                      "visible": false
+                    },
+                    "DataFieldForAction::ProjectService.submitRequest": {
+                      "visible": false
+                    }
+                  }
+                }
+              },
+              "sectionLayout": "Tabs"
+            }
+          }
+        },
+        "VendorList": {
+          "type": "Component",
+          "id": "VendorList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/VendorMaster",
+              "variantManagement": "Page",
+              "navigation": {
+                "VendorMaster": {
+                  "detail": {
+                    "route": "VendorObjectPage"
+                  }
+                }
+              },
+              "initialLoad": true,
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Single",
+                    "enableExport": true,
+                    "condensedTableLayout": false,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "VendorObjectPage": {
+          "type": "Component",
+          "id": "VendorObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/VendorMaster",
+              "editableHeaderContent": false,
+              "sectionLayout": "Tabs",
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.Identification": {
+                  "actions": {
+                    "DataFieldForAction::ProjectService.deactivateVendor": {
+                      "visible": true
+                    },
+                    "DataFieldForAction::ProjectService.activateVendor": {
+                      "visible": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+         "GRNList": {
+          "type": "Component",
+          "id": "GRNList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/GRNReceipts",
+              "variantManagement": "Page",
+              "initialLoad": true,
+              "navigation": {
+                "GRNReceipts": {
+                  "detail": {
+                    "route": "GRNObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Single",
+                    "enableExport": true,
+                    "condensedTableLayout": false,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true
+                    },
+                    "creationMode": {
+                      "name": "NewPage"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "GRNObjectPage": {
+          "type": "Component",
+          "id": "GRNObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/GRNReceipts",
+              "editableHeaderContent": false,
+              "sectionLayout": "Page",
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.Identification": {
+                  "actions": {
+                    "DataFieldForAction::ProjectService.verifyReceipt": {
+                      "visible": true
+                    },
+                    "DataFieldForAction::ProjectService.rejectReceipt": {
+                      "visible": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "DeliveryList": {
+          "type": "Component",
+          "id": "DeliveryList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Deliveries",
+              "variantManagement": "Page",
+              "initialLoad": true,
+              "navigation": {
+                "Deliveries": {
+                  "detail": {
+                    "route": "DeliveryObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Single",
+                    "enableExport": true,
+                    "condensedTableLayout": false,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true
+                    },
+                    "creationMode": {
+                      "name": "NewPage"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "DeliveryObjectPage": {
+          "type": "Component",
+          "id": "DeliveryObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/Deliveries",
+              "editableHeaderContent": false,
+              "sectionLayout": "Tabs",
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.Identification": {
+                  "actions": {
+                    "DataFieldForAction::ProjectService.markInTransit": {
+                      "visible": true
+                    },
+                    "DataFieldForAction::ProjectService.markDelivered": {
+                      "visible": true
+                    },
+                    "DataFieldForAction::ProjectService.markDelayed": {
+                      "visible": true
+                    }
+                  }
+                },
+                "items/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "None",
+                    "enableExport": true,
+                    "condensedTableLayout": false,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "POList": {
+          "type": "Component",
+          "id": "POList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/PurchaseOrders",
+              "variantManagement": "Page",
+              "initialLoad": true,
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable"
+                  }
+                }
+              },
+              "navigation": {
+                "PurchaseOrders": {
+                  "detail": {
+                    "route": "POObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "POObjectPage": {
+          "type": "Component",
+          "id": "POObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/PurchaseOrders",
+              "editableHeaderContent": false,
+              "navigation": {}
+            }
+          }
+        },
+        "MRApprovalDashboard": {
+          "type": "Component",
+          "id": "MRApprovalDashboard",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/MaterialRequests",
+              "variantManagement": "Page",
+              "initialLoad": true,
+              "hideFilterBar": true,
+              "defaultTemplateAnnotationPath": "@com.sap.vocabularies.UI.v1.SelectionVariant#PendingApproval",
+              "navigation": {
+                "MaterialRequests": {
+                  "detail": {
+                    "route": "MRApprovalDetail"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Multi",
+                    "enableExport": true,
+                    "condensedTableLayout": false,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true
+                    }
+                  },
+                  "actions": {
+                    "StandardAction::Create": {
+                      "visible": false
+                    },
+                    "StandardAction::Delete": {
+                      "visible": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "MRApprovalDetail": {
+          "type": "Component",
+          "id": "MRApprovalDetail",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/MaterialRequests",
+              "editableHeaderContent": false,
+              "sectionLayout": "Tabs",
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.Identification": {
+                  "actions": {
+                    "DataFieldForAction::ProjectService.submitRequest": {
+                      "visible": false
+                    },
+                    "DataFieldForAction::ProjectService.closeRequest": {
+                      "visible": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ProcurementMRList": {
+          "type": "Component",
+          "id": "ProcurementMRList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/ApprovedMaterialRequests",
+              "variantManagement": "Page",
+              "initialLoad": true,
+              "navigation": {
+                "ApprovedMaterialRequests": {
+                  "detail": {
+                    "route": "ProcurementMRDetail"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Single",
+                    "enableExport": true,
+                    "condensedTableLayout": false,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true
+                    }
+                  },
+                  "actions": {
+                    "StandardAction::Create": {
+                      "visible": false
+                    },
+                    "StandardAction::Delete": {
+                      "visible": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ProcurementMRDetail": {
+          "type": "Component",
+          "id": "ProcurementMRDetail",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/ApprovedMaterialRequests",
+              "editableHeaderContent": false,
+              "sectionLayout": "Tabs"
+            }
+          }
+        },
+        "InvoiceList": {
+          "type": "Component",
+          "id": "InvoiceList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/Invoices",
+              "variantManagement": "Page",
+              "initialLoad": true,
+              "navigation": {
+                "Invoices": {
+                  "detail": {
+                    "route": "InvoiceObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Single",
+                    "enableExport": true,
+                    "condensedTableLayout": false,
+                    "personalization": {
+                      "column": true,
+                      "sort": true,
+                      "filter": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "InvoiceObjectPage": {
+          "type": "Component",
+          "id": "InvoiceObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/Invoices",
+              "editableHeaderContent": false,
+              "sectionLayout": "Tabs",
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.Identification": {
+                  "actions": {
+                    "DataFieldForAction::ProjectService.submitInvoice": {
+                      "visible": true
+                    },
+                    "DataFieldForAction::ProjectService.performThreeWayMatch": {
+                      "visible": true
+                    },
+                    "DataFieldForAction::ProjectService.approveInvoice": {
+                      "visible": true
+                    },
+                    "DataFieldForAction::ProjectService.rejectInvoice": {
+                      "visible": true
+                    },
+                    "DataFieldForAction::ProjectService.markPaid": {
+                      "visible": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "EngineerMRObjectPage": {
+          "type": "Component",
+          "id": "EngineerMRObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/ActiveProjects/materialRequests",
+              "editableHeaderContent": false,
+              "sectionLayout": "Tabs",
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.Identification": {
+                  "actions": {
+                    "DataFieldForAction::ProjectService.approveRequest": {
+                      "visible": false
+                    },
+                    "DataFieldForAction::ProjectService.rejectRequest": {
+                      "visible": false
+                    },
+                    "DataFieldForAction::ProjectService.closeRequest": {
+                      "visible": false
+                    }
+                  }
+                },
+                "items/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "creationMode": {
+                      "name": "Inline"
+                    },
+                    "selectionMode": "Multi",
+                    "enableExport": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "SeniorMRObjectPage": {
+          "type": "Component",
+          "id": "SeniorMRObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "contextPath": "/SeniorActiveProjects/materialRequests",
+              "editableHeaderContent": false,
+              "sectionLayout": "Tabs",
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.Identification": {
+                  "actions": {
+                    "DataFieldForAction::ProjectService.submitRequest": {
+                      "visible": false
+                    },
+                    "DataFieldForAction::ProjectService.closeRequest": {
+                      "visible": false
+                    }
+                  }
+                },
+                "items/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "None",
+                    "enableExport": true
+                  },
+                  "actions": {
+                    "StandardAction::Create": {
+                      "visible": false
+                    },
+                    "StandardAction::Delete": {
+                      "visible": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "GRNAnalytics": {
+          "type": "Component",
+          "id": "GRNAnalytics",
+          "name": "sap.fe.templates.AnalyticalListPage",
+          "options": {
+            "settings": {
+              "contextPath": "/GRNReceiptAnalytics",
+              "defaultTemplateAnnotationPath": "@com.sap.vocabularies.UI.v1.SelectionPresentationVariant",
+              "variantManagement": "Page",
+              "initialLoad": true,
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "None",
+                    "enableExport": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "LoginPage": {
+          "type": "View",
+          "id": "LoginPage",
+          "name": "solar.epc.projectmanagement.login.LoginPage",
+          "viewLevel": 0
+        },
+        "HomePage": {
+          "type": "View",
+          "id": "HomePage",
+          "name": "solar.epc.projectmanagement.home.HomePage",
+          "viewLevel": 1
+        },
+        "ManagementDashboard": {
+          "type": "View",
+          "id": "ManagementDashboard",
+          "name": "solar.epc.projectmanagement.dashboard.ManagementDashboard",
+          "viewLevel": 2
+        },
+        "QuotationComparison": {
+          "type": "View",
+          "id": "QuotationComparison",
+          "name": "solar.epc.projectmanagement.vendor.QuotationComparison",
+          "viewLevel": 2
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.fe": {
+    "app": {
+      "enableLazyLoading": true
+    }
+  },
+  "sap.ovp": {}
+}

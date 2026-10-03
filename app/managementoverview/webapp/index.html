@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Management Overview — SolarSage EPC</title>
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body.sapUiBody {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            background: #f5f6fa;
+            font-family: '72', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* Hide OVP's "Standard ▾" variant bar — we own the header */
+        .sapUiView .sapMVBox > .sapMIBar,
+        .sapUiView .sapMVBox > .sapMBar,
+        [id*="---mainView"] .sapMIBar:first-child,
+        [id*="---mainView"] > .sapMBar {
+            display: none !important;
+            height: 0 !important;
+            overflow: hidden !important;
+        }
+
+        /* ── Header ─────────────────────────────────────────────── */
+        #ovp-header {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 0 24px;
+            height: 52px;
+            background: #0d1f35;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            z-index: 100;
+        }
+
+        #ovp-back-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 13px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: border-color .15s, color .15s, background .15s;
+            white-space: nowrap;
+        }
+        #ovp-back-btn:hover {
+            border-color: rgba(255,255,255,0.4);
+            color: #fff;
+            background: rgba(255,255,255,0.06);
+        }
+
+        .ovp-sep { width: 1px; height: 26px; background: rgba(255,255,255,0.1); }
+
+        .ovp-icon {
+            width: 30px; height: 30px;
+            border-radius: 6px;
+            background: #1a5c4e;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .ovp-text { flex: 1; min-width: 0; }
+        .ovp-title  { font-size: 13.5px; font-weight: 600; color: #fff; }
+        .ovp-sub    { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .ovp-badge {
+            display: flex; align-items: center; gap: 5px;
+            padding: 3px 9px;
+            border: 1px solid rgba(39,200,138,0.28);
+            border-radius: 10px;
+            color: #5de8b0;
+            font-size: 10px; font-weight: 600; letter-spacing: .05em;
+        }
+        .ovp-badge::before {
+            content: ''; width: 5px; height: 5px;
+            border-radius: 50%; background: #27c88a;
+            animation: blink 2s infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+        /* ── OVP fills remaining space ───────────────────────────── */
+        #ovp-shell { flex: 1; overflow: hidden; position: relative; }
+        #ovp-shell > div { position: absolute; inset: 0; }
+    </style>
+
+    <script>
+        /* Apply saved auth header to all local XHR before UI5 loads */
+        (function () {
+            var a = sessionStorage.getItem("solarEpcAuth");
+            if (!a) return;
+            var _o = XMLHttpRequest.prototype.open;
+            XMLHttpRequest.prototype.open = function () {
+                _o.apply(this, arguments);
+                if (String(arguments[1] || "").indexOf("sapui5.hana.ondemand.com") === -1) {
+                    try { this.setRequestHeader("Authorization", a); } catch (e) {}
+                }
+            };
+        }());
+    </script>
+
+    <script
+        id="sap-ui-bootstrap"
+        src="https://sapui5.hana.ondemand.com/1.147.1/resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-libs="sap.m,sap.ovp,sap.ui.comp,sap.viz,sap.ui.core"
+        data-sap-ui-resourceroots='{"solar.epc.managementoverview": "./"}'
+        data-sap-ui-compatVersion="edge"
+        data-sap-ui-async="true"
+        data-sap-ui-frameOptions="allow"
+        data-sap-ui-oninit="module:sap/ui/core/ComponentSupport">
+    </script>
+</head>
+<body class="sapUiBody" id="content">
+
+    <div id="ovp-header">
+        <a id="ovp-back-btn" href="/projectmanagement/webapp/index.html">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            Back to Home
+        </a>
+
+        <div class="ovp-sep"></div>
+
+        <div class="ovp-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <path d="M8 21h8M12 17v4M7 8h2M13 8l2 2 3-3"/>
+            </svg>
+        </div>
+
+        <div class="ovp-text">
+            <div class="ovp-title">Management Overview</div>
+            <div class="ovp-sub">SolarSage EPC &nbsp;·&nbsp; Budget · Procurement · GRN · Vendor · Invoice KPIs</div>
+        </div>
+
+        <div class="ovp-badge">LIVE</div>
+    </div>
+
+    <div id="ovp-shell">
+        <div
+            data-sap-ui-component
+            data-name="solar.epc.managementoverview"
+            data-id="rootComponent"
+            data-settings='{"id":"rootComponent"}'
+            style="height:100%">
+        </div>
+    </div>
+
+</body>
+</html>

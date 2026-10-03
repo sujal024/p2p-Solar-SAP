@@ -1,0 +1,4 @@
+ID;materialRequest_ID;vendor_ID;quotationNumber;quotationDate;validityDate;status;subtotal;taxAmount;totalAmount;currency;deliveryLeadDays;paymentTerms;isSelected;selectionReason;commercialRemarks
+447073e9-17e6-4583-b4d0-a775b0163f11;2b9c9226-61f5-4d64-9302-bef019e062db;6fbd9607-d515-4fd9-8cf4-0ee22eb9b522;QT-2025-0001;2025-02-05;2025-03-05;SUBMITTED;15800000;2844000;18644000;INR;15;Net 30;false;;
+45415f45-4cd8-4413-8995-a6bfa7d5e771;2b9c9226-61f5-4d64-9302-bef019e062db;b1f22af5-8632-4f0c-9618-2bd4de92d5cd;QT-2025-0002;2025-02-06;2025-03-06;SUBMITTED;15650000;2817000;18467000;INR;25;Net 45;false;;
+dc7e2782-1e67-461e-93be-22740ad5a144;2b9c9226-61f5-4d64-9302-bef019e062db;8a6026c4-5ce1-41fa-9a45-c135bd97f0a7;QT-2025-0003;2025-02-07;2025-03-07;SUBMITTED;15900000;2862000;18762000;INR;10;Net 30;false;;

@@ -1,0 +1,6 @@
+ID;userId;userName;email;role;department;isActive
+b4f40370-3d15-459f-9e83-54bd837d6d01;USR-001;Admin BDM;admin@solar.epc;BDM;Management;true
+a2a2f988-2268-40c4-a3d1-e1f411e56e5a;USR-002;Eng Manager;eng@solar.epc;PROJECT_MANAGER;Engineering;true
+9076de4d-9abd-45d1-8778-d543f843b0fa;USR-003;Proc Officer;proc@solar.epc;PROCUREMENT_OFFICER;Procurement;true
+eeeeeeee-eeee-4eee-8eee-000000000001;USR-004;Arjun Singh;arjun@solar.epc;ENGINEER;Engineering;true
+eeeeeeee-eeee-4eee-8eee-000000000002;USR-005;Sneha Gupta;sneha@solar.epc;ENGINEER;Engineering;true
